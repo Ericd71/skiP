@@ -6,9 +6,9 @@ getgenv().ExploitSpecific = "📜"
 
 -- API CALLS
 
-local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/RoseGoldIsntGay/Rosemoc/main/library.lua"))()
-getgenv().api = loadstring(game:HttpGet("https://raw.githubusercontent.com/RoseGoldIsntGay/Rosemoc/main/api.lua"))()
-local bssapi = loadstring(game:HttpGet("https://raw.githubusercontent.com/RoseGoldIsntGay/Rosemoc/main/bssapi.lua"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ericd71/Rosemoc/main/Library.lua"))()
+getgenv().api = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ericd71/Rosemoc/main/API.lua"))()
+local bssapi = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ericd71/Rosemoc/main/BSS API.lua"))()
 local httpreq = (syn and syn.request) or http_request or (http and http.request) or request
 
 if not isfolder("kocmoc") then makefolder("kocmoc") end
@@ -2401,7 +2401,7 @@ guiElements["toggles"]["autoant"] = autoanttoggle
 
 local serverhopkill = combtab:CreateSection("Serverhopping Combat")
 serverhopkill:CreateButton("Vicious Bee Serverhopper ["..Danger.."]["..ExploitSpecific.."]", function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Boxking776/kocmoc/main/functions/viciousbeeserverhop.lua"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Ericd71/Rosemoc/main/viciousbeeserverhop.lua"))()
 end):AddToolTip("Serverhops for rouge vicious bees")
 serverhopkill:CreateLabel("")
 serverhopkill:CreateLabel("["..Danger.."] These functions will unload the UI")
