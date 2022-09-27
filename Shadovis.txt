@@ -2,7 +2,7 @@ repeat task.wait() until game:IsLoaded()
 
 task.wait(5)
 
-local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/RoseGoldIsntGay/Rosemoc/main/library.lua"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ericd71/Rosemoc/main/Library.lua"))()
 
 local RunService = game:GetService("RunService")
 local VirtualUser = game:GetService("VirtualUser")
