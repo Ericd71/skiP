@@ -8,7 +8,7 @@ getgenv().ExploitSpecific = "📜"
 
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ericd71/Rosemoc/main/Library.lua"))()
 getgenv().api = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ericd71/Rosemoc/main/API.lua"))()
-local bssapi = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ericd71/Rosemoc/main/BSS API.lua"))()
+local bssapi = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ericd71/Rosemoc/main/BSS_API.lua"))()
 local httpreq = (syn and syn.request) or http_request or (http and http.request) or request
 
 if not isfolder("kocmoc") then makefolder("kocmoc") end
