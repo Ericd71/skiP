@@ -4151,7 +4151,7 @@ task.spawn(function()
                     local gui = attach:FindFirstChild("Planter Gui")
                     if gui then
                         gui.MaxDistance = 1e5
-                        gui.Size = UDim2.new(20, 0, 10, 0)
+                        gui.Size = UDim2.new(30, 0, 10, 0)
                         
                         local text = gui.Bar.TextLabel
                         if text then
