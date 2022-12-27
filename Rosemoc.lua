@@ -3962,7 +3962,7 @@ task.spawn(function()
         if kocmoc.toggles.freeantpass then
             game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Free Ant Pass Dispenser")
         end
-        if kocmoc.toggle.freerobopass then
+        if kocmoc.toggles.freerobopass then
             game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Free Robo Pass Dispenser")
         end
         if kocmoc.toggles.autoquest then
