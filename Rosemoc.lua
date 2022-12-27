@@ -393,6 +393,7 @@ getgenv().kocmoc = {
         autodispense = false,
         clock = false,
         freeantpass = false,
+        freerobopass = false,
         honeystorm = false,
         autodoquest = false,
         disableseperators = false,
@@ -2184,6 +2185,7 @@ farmt:CreateToggle("Auto Honey Candles", nil, function(State) kocmoc.toggles.aut
 farmt:CreateToggle("Auto Beesmas Feast", nil, function(State) kocmoc.toggles.autofeast = State end)
 farmt:CreateToggle("Auto Onett's Lid Art", nil, function(State) kocmoc.toggles.autoonettart = State end)
 guiElements["toggles"]["freeantpass"] = farmt:CreateToggle("Auto Free Antpasses", nil, function(State) kocmoc.toggles.freeantpass = State end)
+guiElements["toggles"]["freerobopass"] = farmt:CreateToggle("Auto Free Robopasses", nil, function(State) kocmoc.toggles.freerobopass = State end)
 guiElements["toggles"]["farmsprouts"] = farmt:CreateToggle("Farm Sprouts", nil, function(State) kocmoc.toggles.farmsprouts = State end)
 guiElements["toggles"]["farmpuffshrooms"] = farmt:CreateToggle("Farm Puffshrooms", nil, function(State) kocmoc.toggles.farmpuffshrooms = State end)
 farmt:CreateToggle("Farm Snowflakes ["..Danger.."]", nil, function(State) kocmoc.toggles.farmsnowflakes = State end)
@@ -3959,6 +3961,9 @@ task.spawn(function()
         end
         if kocmoc.toggles.freeantpass then
             game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Free Ant Pass Dispenser")
+        end
+        if kocmoc.toggle.freerobopass then
+            game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Free Robo Pass Dispenser")
         end
         if kocmoc.toggles.autoquest then
             local completeQuest = game.ReplicatedStorage.Events.CompleteQuestFromPool
