@@ -1665,7 +1665,7 @@ local fullPlanterData = {
             ["Pineapple Patch"] = 1.25
         }
     },
-    Hydroponic = {
+    ["Hydroponic"] = {
         NectarTypes = {Refreshing = 1.4, Comforting = 1.4},
         GrowthFields = {
             ["Blue Flower Field"] = 1.5,
