@@ -309,6 +309,8 @@ local DropdownPlanterTable = {
     "Blue Clay Planter",
     "Tacky Planter",
     "Pesticide Planter",
+    "Heat-Treated Planter",
+    "Hydroponic Planter",
     "Petal Planter",
     "The Planter Of Plenty",
     "None"
@@ -447,6 +449,8 @@ getgenv().kocmoc = {
         blueclayplanter = false,
         tackyplanter = false,
         pesticideplanter = false,
+        heattreatedplanter = false,
+        hydroponicplanter = false,
         petalplanter = false,
         shutdownkick = false,
         webhookupdates = false,
@@ -1608,7 +1612,6 @@ local fullPlanterData = {
             ["Mushroom Field"] = 1.25
         }
     },
-    --[[
     Plenty = {
         NectarTypes = {
             Satisfying = 1.5,
@@ -1644,7 +1647,6 @@ local fullPlanterData = {
         },
         GrowthFields = {}
     },
-    ]]
     Tacky = {
         NectarTypes = {Satisfying = 1.25, Comforting = 1.25},
         GrowthFields = {
@@ -2218,6 +2220,8 @@ guiElements["toggles"]["blueclayplanter"] = plantersection:CreateToggle("Blackli
 guiElements["toggles"]["tackyplanter"] = plantersection:CreateToggle("Blacklist Tacky Planter", nil, function(State) kocmoc.toggles.tackyplanter = State end)
 guiElements["toggles"]["pesticideplanter"] = plantersection:CreateToggle("Blacklist Pesticide Planter", nil, function(State) kocmoc.toggles.pesticideplanter = State end)
 guiElements["toggles"]["petalplanter"] = plantersection:CreateToggle("Blacklist Petal Planter", nil, function(State) kocmoc.toggles.petalplanter = State end)
+guiElements["toggles"]["heattreatedplanter"] = plantersection:CreateToggle("Blacklist Heat-Treated Planter", nil, function(State) kocmoc.toggles.heattreatedplanter = State end)
+guiElements["toggles"]["hydroponicplanter"] = plantersection:CreateToggle("Blacklist Hydroponic Planter", nil, function(State) kocmoc.toggles.hydroponicplanter = State end)
 
 local customplanterssection = plantertab:CreateSection("Custom Planters")
 customplanterssection:CreateLabel("Turning this on will disable auto planters!")
@@ -4242,7 +4246,7 @@ task.spawn(function()
                                 end
                             end
                         end
-                    end
+                    endCandy
                     if not planted and cycle[currentstep].Planter and #fetchAllPlanters() < 3 then
                         local planter = cycle[currentstep].Planter
                         if planter == "The Planter Of Plenty" and GetItemListWithValue()["PlentyPlanter"] and GetItemListWithValue()["PlentyPlanter"] > 0 then
@@ -4271,6 +4275,8 @@ task.spawn(function()
             planterData["Tacky"] = not kocmoc.toggles.tackyplanter and fullPlanterData["Tacky"] or nil
             planterData["Pesticide"] = not kocmoc.toggles.pesticideplanter and fullPlanterData["Pesticide"] or nil
             planterData["Petal"] = not kocmoc.toggles.petalplanter and fullPlanterData["Petal"] or nil
+            planterData["Heat-Treated"] = not kocmoc.toggles.heattreatedplanter and fullPlanterData["Heat-Treated"] or nil
+            planterData["Hydroponic"] = not kocmoc.toggles.hydroponicplanter and fullPlanterData["Hydroponic"] or nil
 
             if kocmoc.toggles.autoplanters and not temptable.started.ant and kocmoc.toggles.autofarm and not temptable.converting then
                 RequestCollectPlanters(fetchAllPlanters())
