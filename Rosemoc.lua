@@ -1351,7 +1351,7 @@ function getdigital()
             if v.Name == "C" then
                 api.humanoidrootpart().Velocity = Vector3.new(0, 0, 0)
                 api.humanoidrootpart().CFrame = CFrame.new(v.CFrame.p)
-                task.wait(1.25)
+                task.wait(1.5)
             end
         end
     end)
