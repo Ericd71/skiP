@@ -1353,6 +1353,7 @@ function getdigital()
                 farm(v:FindFirstChild("C"))
                 break
             end
+        end
     end)
 end
 
