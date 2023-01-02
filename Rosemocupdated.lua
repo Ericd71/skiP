@@ -3153,6 +3153,7 @@ task.spawn(function()
             end
             if kocmoc.toggles.farmfuzzy then
                 getfuzzy()
+            end
             if kocmoc.toggles.farmdigital then
                 getdigital()
             end
