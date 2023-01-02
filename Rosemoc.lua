@@ -424,6 +424,7 @@ getgenv().kocmoc = {
         godmode = false,
         disableconversion = false,
         autodonate = false,
+        farmdigital = false,
         autouseconvertors = false,
         honeymaskconv = false,
         resetbeenergy = false,
@@ -1344,6 +1345,17 @@ function getfuzzy()
         end
     end)
 end
+function getdigital()
+    pcall(function()
+        for i,v in next, game.Workspace.Camera.DupedTokens:GetChildren() do
+            if v.Name == "C" then
+                api.humanoidrootpart().Velocity = Vector3.new(0, 0, 0)
+                api.humanoidrootpart().CFrame = CFrame.new(v.CFrame.p)
+                task.wait(1.25)
+            end
+        end
+    end)
+end
 
 function getflame()
     for _,v in pairs(game.Workspace.PlayerFlames:GetChildren()) do
@@ -2156,6 +2168,7 @@ guiElements["toggles"]["autosprinkler"] = farmo:CreateToggle("Auto Sprinkler", n
 guiElements["toggles"]["farmbubbles"] = farmo:CreateToggle("Farm Bubbles", nil, function(State) kocmoc.toggles.farmbubbles = State end)
 guiElements["toggles"]["farmflame"] = farmo:CreateToggle("Farm Flames", nil, function(State) kocmoc.toggles.farmflame = State end)
 guiElements["toggles"]["farmcoco"] = farmo:CreateToggle("Farm Coconuts & Shower", nil, function(State) kocmoc.toggles.farmcoco = State end)
+guiElements["toggles"]["farmdigital"] = farmo:CreateToggle("Farm Digital Bee", nil, function(State) kocmoc.toggles.farmdigital = State end)
 guiElements["toggles"]["collectcrosshairs"] = farmo:CreateToggle("Farm Precise Crosshairs", nil, function(State) kocmoc.toggles.collectcrosshairs = State end)
 guiElements["toggles"]["fastcrosshairs"] = farmo:CreateToggle("Smart Precise Crosshairs ["..Danger.."]", nil, function(State) kocmoc.toggles.fastcrosshairs = State end)
 guiElements["toggles"]["farmfuzzy"] = farmo:CreateToggle("Farm Fuzzy Bombs", nil, function(State) kocmoc.toggles.farmfuzzy = State end)
@@ -3142,6 +3155,9 @@ task.spawn(function()
             if kocmoc.toggles.farmfuzzy then
                 getfuzzy()
             end
+            if kocmoc.toggles.farmdigital then
+                getdigital()
+            end
         end
     end
 end)
@@ -3177,6 +3193,17 @@ game.Workspace.Particles.ChildAdded:Connect(function(v)
         end
     end
 end)
+
+-- Auto Digital Bee
+
+--[[ game.Workspace.Camera.DupedTokens.ChildAdded:Connect(function(v)
+    if v:IsA("Part") and not temptable.started.ant and not temptable.started.vicious and kocmoc.toggles.autofarm and not temptable.converting and not temptable.planting then
+        if v.Name == "C" and kocmoc.toggles.farmdigital then
+            task.wait(1.25)
+               
+        end
+    end
+end) ]]
 
 task.spawn(function()
     while task.wait() do
