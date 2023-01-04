@@ -45,7 +45,7 @@ local xlp = {
     end,
     ["tween"] = function(time, pos) -- tween to position by (time) + (cframe)
         if game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-            game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(time, Enum.EasingStyle.Linear), {CFrame = pos}):Play() task.wait(time)
+            game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(((game.Players.LocalPlayer.Character.HumanoidRootPart.Position - pos)).Magnitude / time, Enum.EasingStyle.Linear), {CFrame = pos}):Play(); task.wait(time)
         end
     end,
     ["walkTo"] = function(v3) -- walk to position (not pathfinding)
