@@ -88,6 +88,7 @@ end
 
 getgenv().temptable = {
     version = "4.3.0",
+    MondoCollectTokens = false,
     blackfield = "Sunflower Field",
     redfields = {},
     bluefields = {},
@@ -342,12 +343,13 @@ floatpad.Name = "FloatPad"
 
 -- cococrab
 
-local cocopad = Instance.new("Part", game.Workspace)
+local cocopad = Instance.new("Part", game:GetService("Workspace"))
 cocopad.Name = "Coconut Part"
 cocopad.Anchored = true
 cocopad.Transparency = 1
-cocopad.Size = Vector3.new(10, 1, 10)
-cocopad.Position = Vector3.new(-307.52117919922, 105.91863250732, 467.86791992188)
+cocopad.Size = Vector3.new(135, 1, 100)
+cocopad.CanCollide = false
+cocopad.Position = Vector3.new(-265.52117919922, 105.91863250732, 480.86791992188)
 
 -- antfarm
 
@@ -1351,7 +1353,7 @@ function getdigital()
             if v.Name == "C" then
                 api.humanoidrootpart().Velocity = Vector3.new(0, 0, 0)
                 api.humanoidrootpart().CFrame = CFrame.new(v.CFrame.p)
-                task.wait(1.5)
+                task.wait(1.75)
             end
         end
     end)
@@ -1365,6 +1367,41 @@ function getflame()
                 task.wait()
             until (v.Position - api.humanoidrootpart().Position).magnitude <= 4 or not v or not v.Parent or not temptable.running
             return
+        end
+    end
+end
+
+function farmcombattokens(v, pos, type)
+    if type == 'crab' then
+        if v.CFrame.YVector.Y == 1 and v.Transparency == 0 and v ~= nil and v.Parent ~= nil then
+            if (v.Position - pos.Position).Magnitude < 50 then
+                repeat
+                    task.wait()
+                    api.walkTo(v.Position)
+                until not v.Parent or v.CFrame.YVector.Y ~= 1 or not v
+                api.teleport(pos)
+            end
+        end
+    elseif type == 'snail' then
+        if v.CFrame.YVector.Y == 1 and v.Transparency == 0 and v ~= nil and v.Parent ~= nil then
+            if (v.Position - pos.Position).Magnitude < 50 then
+                repeat
+                    task.wait()
+                    api.walkTo(v.Position)
+                until not v.Parent or v.CFrame.YVector.Y ~= 1 or not v
+                api.teleport(pos)
+            end
+        end
+    elseif type == 'mondo' then
+        if temptable.MondoCollectTokens then return end
+        if v.CFrame.YVector.Y == 1 and v.Transparency == 0 and v ~= nil and v.Parent ~= nil then
+            if (v.Position - pos.Position).Magnitude < 25 then
+                repeat
+                    task.wait()
+                    api.tweenNoDelay(0.5, v.CFrame)
+                until not v.Parent or v.CFrame.YVector.Y ~= 1 or not v
+                api.teleport(pos)
+            end
         end
     end
 end
@@ -2073,7 +2110,7 @@ function formatString(Planter, Field, Nectar)
 end
 
 local Config = {
-    WindowName = "Rosemoc v" .. temptable.version .. " Re-Remastered By RoseGold",
+    WindowName = "Rosemoc v" .. temptable.version .. " Edited By Orangina",
     Color = Color3.fromRGB(39, 133, 11),
     Keybind = Enum.KeyCode.Semicolon
 }
@@ -2381,10 +2418,13 @@ end)
 
 local mobkill = combtab:CreateSection("Combat")
 mobkill:CreateToggle("Train Crab", nil, function(State)
-    kocmoc.toggles.traincrab = State
     if State then
-        api.humanoidrootpart().CFrame = CFrame.new(-307.52117919922, 107.91863250732, 467.86791992188)
+        api.teleport(CFrame.new(-375, 110, 535))
+        task.wait(5)
+        api.humanoidrootpart().CFrame = CFrame.new(-256, 110, 475)
     end
+    cocopad.CanCollide = State
+    kocmoc.toggles.traincrab = State
 end)
 mobkill:CreateToggle("Train Snail", nil, function(State)
     kocmoc.toggles.trainsnail = State
@@ -2392,7 +2432,7 @@ mobkill:CreateToggle("Train Snail", nil, function(State)
     if State then
         api.humanoidrootpart().CFrame = CFrame.new(
             fd.Position.X,
-            fd.Position.Y - 20,
+            fd.Position.Y - 10,
             fd.Position.Z
         )
     else
@@ -3807,7 +3847,7 @@ task.spawn(function()
     end
 end)
 
-task.spawn(function()
+--[[ task.spawn(function()
     while task.wait() do
         if kocmoc.toggles.traincrab and api.humanoidrootpart() then
             api.humanoidrootpart().CFrame = CFrame.new(-307.52117919922, 110.11863250732, 467.86791992188)
@@ -3830,6 +3870,30 @@ task.spawn(function()
                                 api.humanoidrootpart().CFrame = v.CFrame
                                 break
                             end
+                        end
+                    end
+                end
+            end
+        end
+    end
+end) ]]
+
+game.Workspace.Collectibles.ChildAdded:Connect(function(token) -- kometa
+    if kocmoc.toggles.trainsnail then
+        farmcombattokens(token, CFrame.new(game.Workspace.FlowerZones['Stump Field'].Position.X, game.Workspace.FlowerZones['Stump Field'].Position.Y-10, game.Workspace.FlowerZones['Stump Field'].Position.Z), 'snail')
+    end
+    if kocmoc.toggles.traincrab then
+        farmcombattokens(token, CFrame.new(-256, 110, 475), 'crab')
+    end
+    if kocmoc.toggles.farmrares and not temptable.started.crab and not temptable.started.ant then
+        for k, v in next, game.workspace.Collectibles:GetChildren() do
+            if v.CFrame.YVector.Y == 1 then
+                if v.Transparency == 0 then
+                    decal = v:FindFirstChildOfClass("Decal")
+                    for e, r in next, kocmoc.rares do
+                        if decal.Texture == r or decal.Texture == "rbxassetid://" .. r then
+                            api.humanoidrootpart().CFrame = v.CFrame
+                            break
                         end
                     end
                 end
