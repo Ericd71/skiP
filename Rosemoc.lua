@@ -4763,3 +4763,6 @@ for i, v in next, workspace.Decorations.Misc:GetDescendants() do
         v.Transparency = 0.5
     end
 end
+if workspace:FindFirstChild('Decorations') and workspace.Decorations:FindFirstChild('30BeeZone') and workspace.Decorations['30BeeZone']:FindFirstChild('Pit')  then
+    game:GetService("Workspace").Decorations['30BeeZone'].Pit:Destroy()
+end
