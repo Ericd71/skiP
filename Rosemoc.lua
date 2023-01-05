@@ -88,7 +88,6 @@ end
 
 getgenv().temptable = {
     version = "4.3.0",
-    MondoCollectTokens = false,
     blackfield = "Sunflower Field",
     redfields = {},
     bluefields = {},
@@ -403,6 +402,7 @@ getgenv().kocmoc = {
         loopfarmspeed = false,
         mobquests = false,
         traincrab = false,
+        trainsnail = false,
         avoidmobs = false,
         farmsprouts = false,
         enabletokenblacklisting = false,
@@ -1251,7 +1251,7 @@ function converthoney()
     task.wait(0)
     if temptable.converting then
         if player.PlayerGui.ScreenGui.ActivateButton.TextBox.Text ~= "Stop Making Honey" and player.PlayerGui.ScreenGui.ActivateButton.BackgroundColor3 ~= Color3.new(201, 39, 28) or (player.SpawnPos.Value.Position - api.humanoidrootpart().Position).magnitude > 13 then
-            api.tween(80, player.SpawnPos.Value * CFrame.fromEulerAnglesXYZ(0, 110, 0) + Vector3.new(0, 0, 9))
+            api.tween(1, player.SpawnPos.Value * CFrame.fromEulerAnglesXYZ(0, 110, 0) + Vector3.new(0, 0, 9))
             task.wait(.9)
             if player.PlayerGui.ScreenGui.ActivateButton.TextBox.Text ~= "Stop Making Honey" and player.PlayerGui.ScreenGui.ActivateButton.BackgroundColor3 ~= Color3.new(201, 39, 28) or (player.SpawnPos.Value.Position - api.humanoidrootpart().Position).magnitude > 13 then
                 game:GetService("ReplicatedStorage").Events.PlayerHiveCommand:FireServer("ToggleHoneyMaking")
@@ -1347,33 +1347,6 @@ function getfuzzy()
         end
     end)
 end
---[[ function getdigital()
-    pcall(function()
-        for i,v in next, game.Workspace.Camera.DupedTokens:GetChildren() do
-            if v.Name == "C" then
-                api.humanoidrootpart().Velocity = Vector3.new(0, 0, 0)
-                api.humanoidrootpart().CFrame = CFrame.new(v.CFrame.p)
-                task.wait(1.75)
-            end
-        end
-    end)
-end ]]
-
---[[ function getdigital()
-    pcall(function()
-        for i,v in next, game.Workspace.Camera.DupedTokens:GetChildren() do
-            if v.Name == "C" then
-                local hashed = math.random(1, 42345252)
-                v.Name = tostring(hashed)
-                repeat task.wait(0.1)
-                api.humanoidrootpart().Velocity = Vector3.new(0, 0, 0)
-                api.humanoidrootpart().CFrame = CFrame.new(v.CFrame.p)
-                until not game.Workspace.Camera.DupedTokens:FindFirstChild(hashed)
-            end
-        end
-    end)
-end ]]
-
 function getdigital()
     pcall(function()
         for i,v in next, game.Workspace.Camera.DupedTokens:GetChildren() do
@@ -1406,7 +1379,7 @@ function farmcombattokens(v, pos, type)
         if v.CFrame.YVector.Y == 1 and v.Transparency == 0 and v ~= nil and v.Parent ~= nil then
             if (v.Position - pos.Position).Magnitude < 50 then
                 repeat
-                    task.wait()
+                    task.wait(.5)
                     api.walkTo(v.Position)
                 until not v.Parent or v.CFrame.YVector.Y ~= 1 or not v
                 api.teleport(pos)
@@ -1416,13 +1389,13 @@ function farmcombattokens(v, pos, type)
         if v.CFrame.YVector.Y == 1 and v.Transparency == 0 and v ~= nil and v.Parent ~= nil then
             if (v.Position - pos.Position).Magnitude < 50 then
                 repeat
-                    task.wait()
+                    task.wait(.5)
                     api.walkTo(v.Position)
                 until not v.Parent or v.CFrame.YVector.Y ~= 1 or not v
                 api.teleport(pos)
             end
         end
-    elseif type == 'mondo' then
+    --[[ elseif type == 'mondo' then
         if temptable.MondoCollectTokens then return end
         if v.CFrame.YVector.Y == 1 and v.Transparency == 0 and v ~= nil and v.Parent ~= nil then
             if (v.Position - pos.Position).Magnitude < 25 then
@@ -1432,7 +1405,7 @@ function farmcombattokens(v, pos, type)
                 until not v.Parent or v.CFrame.YVector.Y ~= 1 or not v
                 api.teleport(pos)
             end
-        end
+        end ]]
     end
 end
 
@@ -2140,7 +2113,7 @@ function formatString(Planter, Field, Nectar)
 end
 
 local Config = {
-    WindowName = "Rosemoc v" .. temptable.version .. " Edited By Orangina",
+    WindowName = "Rosemoc v" .. temptable.version .. " Re-Remastered By RoseGold",
     Color = Color3.fromRGB(39, 133, 11),
     Keybind = Enum.KeyCode.Semicolon
 }
@@ -2462,7 +2435,7 @@ mobkill:CreateToggle("Train Snail", nil, function(State)
     if State then
         api.humanoidrootpart().CFrame = CFrame.new(
             fd.Position.X,
-            fd.Position.Y - 10,
+            fd.Position.Y - 20,
             fd.Position.Z
         )
     else
@@ -2550,7 +2523,7 @@ end
 
 local miscc = misctab:CreateSection("Misc")
 miscc:CreateButton("Ant Challenge Semi-Godmode", function()
-    api.tween(80, CFrame.new(93.4228, 32.3983, 553.128))
+    api.tween(1, CFrame.new(93.4228, 32.3983, 553.128))
     task.wait(1)
     game.ReplicatedStorage.Events.ToyEvent:FireServer("Ant Challenge")
     api.humanoidrootpart().Position = Vector3.new(93.4228, 42.3983, 553.128)
@@ -2561,9 +2534,9 @@ miscc:CreateButton("Ant Challenge Semi-Godmode", function()
     l.Name = "Humanoid"
     task.wait()
     player.Character["1"]:Destroy()
-    api.tween(80, CFrame.new(93.4228, 32.3983, 553.128))
+    api.tween(1, CFrame.new(93.4228, 32.3983, 553.128))
     task.wait(8)
-    api.tween(80, CFrame.new(93.4228, 32.3983, 553.128))
+    api.tween(1, CFrame.new(93.4228, 32.3983, 553.128))
 end)
 local wstoggle = miscc:CreateToggle("Walk Speed", nil, function(State)
     kocmoc.toggles.loopspeed = State
@@ -3603,7 +3576,7 @@ task.spawn(function()
                                     disableall()
                                     game.Workspace.Map.Ground.HighBlock.CanCollide = false
                                     mondopition = game.Workspace.Monsters["Mondo Chick (Lvl 8)"].Head.Position
-                                    api.tween(80, CFrame.new(
+                                    api.tween(1, CFrame.new(
                                         mondopition.x,
                                         mondopition.y - 60,
                                         mondopition.z)
@@ -3742,7 +3715,7 @@ task.spawn(function()
             for i, v in next, game.workspace.Particles:GetChildren() do
                 for x in string.gmatch(v.Name, "Vicious") do
                     if string.find(v.Name, "Vicious") then
-                        api.tween(80, CFrame.new(v.Position.x, v.Position.y, v.Position.z))
+                        api.tween(1, CFrame.new(v.Position.x, v.Position.y, v.Position.z))
                         task.wait(1)
                         api.tween(0.5, CFrame.new(v.Position.x, v.Position.y, v.Position.z))
                         task.wait(.5)
@@ -3812,9 +3785,9 @@ task.spawn(function()
                     end
                 end
                 if not awb then
-                    api.tween(80, temptable.gacf(temptable.windy, 5))
+                    api.tween(1, temptable.gacf(temptable.windy, 5))
                     task.wait(2)
-                    api.tween(80, temptable.gacf(temptable.windy, 5))
+                    api.tween(1, temptable.gacf(temptable.windy, 5))
                     task.wait(2)
                     awb = true
                 end
@@ -3874,9 +3847,9 @@ task.spawn(function()
         end
 end)
 
---[[ task.spawn(function()
+task.spawn(function()
     while task.wait() do
-        if kocmoc.toggles.traincrab and api.humanoidrootpart() then
+        --[[ if kocmoc.toggles.traincrab and api.humanoidrootpart() then
             api.humanoidrootpart().CFrame = CFrame.new(-307.52117919922, 110.11863250732, 467.86791992188)
         end
         if kocmoc.toggles.trainsnail and api.humanoidrootpart() then
@@ -3886,7 +3859,7 @@ end)
                 fd.Position.Y - 20,
                 fd.Position.Z
             )
-        end
+        end ]]
         if kocmoc.toggles.farmrares and not temptable.started.crab and not temptable.started.ant then
             for k, v in next, game.workspace.Collectibles:GetChildren() do
                 if v.CFrame.YVector.Y == 1 then
@@ -3903,29 +3876,17 @@ end)
             end
         end
     end
-end) ]]
+end)
 
 game.Workspace.Collectibles.ChildAdded:Connect(function(token) -- kometa
-    if kocmoc.toggles.trainsnail then
-        farmcombattokens(token, CFrame.new(game.Workspace.FlowerZones['Stump Field'].Position.X, game.Workspace.FlowerZones['Stump Field'].Position.Y-10, game.Workspace.FlowerZones['Stump Field'].Position.Z), 'snail')
+    if kocmoc.toggles.trainsnail  then
+        farmcombattokens(token, CFrame.new(game.Workspace.FlowerZones['Stump Field'].Position.X, game.Workspace.FlowerZones['Stump Field'].Position.Y-20, game.Workspace.FlowerZones['Stump Field'].Position.Z), 'snail')
     end
-    if kocmoc.toggles.traincrab then
+
+    if kocmoc.toggles.traincrab --[[ and api.isExist(game:GetService("Workspace").Monsters["Coconut Crab (Lvl 12)"]) ]] then
         farmcombattokens(token, CFrame.new(-256, 110, 475), 'crab')
-    end
-    if kocmoc.toggles.farmrares and not temptable.started.crab and not temptable.started.ant then
-        for k, v in next, game.workspace.Collectibles:GetChildren() do
-            if v.CFrame.YVector.Y == 1 then
-                if v.Transparency == 0 then
-                    decal = v:FindFirstChildOfClass("Decal")
-                    for e, r in next, kocmoc.rares do
-                        if decal.Texture == r or decal.Texture == "rbxassetid://" .. r then
-                            api.humanoidrootpart().CFrame = v.CFrame
-                            break
-                        end
-                    end
-                end
-            end
-        end
+    --[[ elseif kocmoc.toggles.traincrab and not api.isExist(game:GetService("Workspace").Monsters["Coconut Crab (Lvl 12)"]) then
+        api.humanoidrootpart().CFrame = game.Workspace.FlowerZones:FindFirstChild("Coconut Field").CFrame ]]
     end
 end)
 
@@ -4559,76 +4520,76 @@ task.spawn(function()
                 mobText = fetchVisualMonsterString(v)
                 if mobText ~= nil then
                     local mob = panel:CreateButton(mobText, function()
-                        api.tween(80, CFrame.new(getNearestField(v)))
+                        api.tween(1, CFrame.new(getNearestField(v)))
                     end)
                     table.insert(statusTable, {mob, v})
                 end
             end
         end
         local mob2 = panel:CreateButton("Mondo Chick: 00:00", function()
-            api.tween(80,
+            api.tween(1,
                       game.Workspace.FlowerZones["Mountain Top Field"]
                           .CFrame)
         end)
         local panel2 = hometab:CreateSection("Utility Panel")
         local windUpd = panel2:CreateButton("Wind Shrine: 00:00", function()
-            api.tween(80,
+            api.tween(1,
                       CFrame.new(
                           game.Workspace.NPCs["Wind Shrine"]
                               .Circle.Position + Vector3.new(0, 5, 0)))
         end)
         local rfbUpd = panel2:CreateButton("Red Field Booster: 00:00",
                                            function()
-            api.tween(80,
+            api.tween(1,
                       CFrame.new(
                           game.Workspace.Toys["Red Field Booster"]
                               .Platform.Position + Vector3.new(0, 5, 0)))
         end)
         local bfbUpd = panel2:CreateButton("Blue Field Booster: 00:00",
                                            function()
-            api.tween(80,
+            api.tween(1,
                       CFrame.new(
                           game.Workspace.Toys["Blue Field Booster"]
                               .Platform.Position + Vector3.new(0, 5, 0)))
         end)
         local wfbUpd = panel2:CreateButton("White Field Booster: 00:00",
                                            function()
-            api.tween(80, CFrame.new(
+            api.tween(1, CFrame.new(
                           game.Workspace.Toys["Field Booster"]
                               .Platform.Position + Vector3.new(0, 5, 0)))
         end)
         local cocoDispUpd = panel2:CreateButton("Coconut Dispenser: 00:00",
                                                 function()
-            api.tween(80,
+            api.tween(1,
                       CFrame.new(
                           game.Workspace.Toys["Coconut Dispenser"]
                               .Platform.Position + Vector3.new(0, 5, 0)))
         end)
         local ic1 = panel2:CreateButton("Instant Converter A: 00:00", function()
-            api.tween(80,
+            api.tween(1,
                       CFrame.new(
                           game.Workspace.Toys["Instant Converter"]
                               .Platform.Position + Vector3.new(0, 5, 0)))
         end)
         local ic2 = panel2:CreateButton("Instant Converter B: 00:00", function()
-            api.tween(80,
+            api.tween(1,
                       CFrame.new(
                           game.Workspace.Toys["Instant Converter B"]
                               .Platform.Position + Vector3.new(0, 5, 0)))
         end)
         local ic3 = panel2:CreateButton("Instant Converter C: 00:00", function()
-            api.tween(80,
+            api.tween(1,
                       CFrame.new(
                           game.Workspace.Toys["Instant Converter C"]
                               .Platform.Position + Vector3.new(0, 5, 0)))
         end)
         local wcUpd = panel2:CreateButton("Wealth Clock: 00:00", function()
-            api.tween(80, CFrame.new(
+            api.tween(1, CFrame.new(
                           game.Workspace.Toys["Wealth Clock"]
                               .Platform.Position + Vector3.new(0, 5, 0)))
         end)
         local mmsUpd = panel2:CreateButton("Mythic Meteor Shower: 00:00", function()
-            api.tween(80, CFrame.new( game.Workspace.Toys["Mythic Meteor Shower"].Platform.Position + Vector3.new(0, 5, 0)))
+            api.tween(1, CFrame.new( game.Workspace.Toys["Mythic Meteor Shower"].Platform.Position + Vector3.new(0, 5, 0)))
         end)
         local utilities = {
             ["Red Field Booster"] = rfbUpd,
