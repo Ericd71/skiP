@@ -1,8 +1,15 @@
 repeat task.wait(0.1) until game:IsLoaded()
 
+
 getgenv().Star = "⭐"
 getgenv().Danger = "⚠️"
 getgenv().ExploitSpecific = "📜"
+
+--[[
+local Identify_ = math.random(54254252) -- Sakata
+
+getgenv().Identify = Identify_
+]]
 
 -- API CALLS
 
@@ -31,6 +38,9 @@ if isfile("rosemoc.txt") == false then
         writefile("rosemoc.txt", "discord")
     })
 end
+
+--Sakata
+
 
 -- Script temporary variables
 local player = game.Players.LocalPlayer
@@ -87,7 +97,7 @@ for _, v in pairs(game:GetService("CoreGui"):GetDescendants()) do
 end
 
 getgenv().temptable = {
-    version = "4.3.0",
+    version = "1.1",
     blackfield = "Sunflower Field",
     redfields = {},
     bluefields = {},
@@ -469,7 +479,8 @@ getgenv().kocmoc = {
         ["autouseTropical Drink"] = false,
         usegumdropsforquest = false,
         autox4 = false,
-        newtokencollection = false
+        newtokencollection = false,
+        gpusaver = false
     },
     vars = {
         field = "Ant Field",
@@ -2113,8 +2124,8 @@ function formatString(Planter, Field, Nectar)
 end
 
 local Config = {
-    WindowName = "Rosemoc v" .. temptable.version .. " Re-Remastered By RoseGold",
-    Color = Color3.fromRGB(39, 133, 11),
+    WindowName = "Orangina v" .. temptable.version .. " Remastered By OrangeIsTheColour",
+    Color = Color3.fromRGB(255, 128, 0),
     Keybind = Enum.KeyCode.Semicolon
 }
 local Window = library:CreateWindow(Config, game:GetService("CoreGui"))
@@ -2133,7 +2144,7 @@ local itemstab = Window:CreateTab("Items")
 local plantertab = Window:CreateTab("Planters")
 local misctab = Window:CreateTab("Misc")
 local setttab = Window:CreateTab("Settings")
-local premiumtab = Window:CreateTab("Premium")
+--[[ local premiumtab = Window:CreateTab("Premium") ]]
 
 local loadingInfo = hometab:CreateSection("Startup")
 local loadingFunctions = loadingInfo:CreateLabel("Loading Functions..")
@@ -2537,6 +2548,9 @@ miscc:CreateButton("Ant Challenge Semi-Godmode", function()
     api.tween(1, CFrame.new(93.4228, 32.3983, 553.128))
     task.wait(8)
     api.tween(1, CFrame.new(93.4228, 32.3983, 553.128))
+end)
+local gpusave = miscc:CreateToggle('GPU, CPU Saver', nil, function(State) --Sakata
+    kocmoc.toggles.gpusaver = State
 end)
 local wstoggle = miscc:CreateToggle("Walk Speed", nil, function(State)
     kocmoc.toggles.loopspeed = State
@@ -3110,6 +3124,7 @@ pts:CreateButton("Remove Token From Priority List", function()
 end)
 pts:CreateDropdown("Priority List", kocmoc.priority, function(Option) end)
 
+--[[
 local buysection = premiumtab:CreateSection("Buy")
 buysection:CreateLabel("Support the developer of Kocmoc v3!")
 buysection:CreateButton("Copy Shirt Link", function()
@@ -3144,6 +3159,7 @@ webhooksection:CreateLabel("Kocmoc Premium includes:")
 webhooksection:CreateLabel("Enable Webhook [" .. getgenv().Star .. "]")
 webhooksection:CreateLabel("The perfect way to track your exact")
 webhooksection:CreateLabel("progress even from your mobile device!")
+]]
 
 loadingUI:UpdateText("Loaded UI")
 local loadingLoops = loadingInfo:CreateLabel("Loading Loops..")
@@ -4647,6 +4663,142 @@ task.spawn(function()
     end)
 end)
 
+if _G.loadRecent and isfile('kocmoc/recent.json') then
+    kocmoc = game:service("HttpService"):JSONDecode(readfile("kocmoc/recent.json"))
+            for i,v in pairs(guiElements) do
+            for j,k in pairs(v) do
+                local obj = k:GetObject()
+                local lastCharacters = obj.Name:reverse():sub(0, obj.Name:reverse():find(" ")):reverse()
+                if kocmoc[i][j] then
+                    if lastCharacters == " Dropdown" then
+                        obj.Container.Value.Text = kocmoc[i][j]
+                    elseif lastCharacters == " Slider" then
+                        task.spawn(function()
+                            local Tween = game:GetService("TweenService"):Create(
+                                obj.Slider.Bar,
+                                TweenInfo.new(1),
+                                {Size = UDim2.new((tonumber(kocmoc[i][j]) - k:GetMin()) / (k:GetMax() - k:GetMin()), 0, 1, 0)}
+                            )
+                            Tween:Play()
+                            local startStamp = tick()
+                            local startValue = tonumber(obj.Value.PlaceholderText)
+                            while tick() - startStamp < 1 do
+                                task.wait()
+                                local partial = tick() - startStamp
+                                local value = (startValue + ((tonumber(kocmoc[i][j]) - startValue) * partial))
+                                obj.Value.PlaceholderText = math.round(value * 100) / 100
+                            end
+                            obj.Value.PlaceholderText = tonumber(kocmoc[i][j])
+                        end)
+                    elseif lastCharacters == " Toggle" then
+                        obj.Toggle.BackgroundColor3 = kocmoc[i][j] and Config.Color or Color3.fromRGB(50,50,50)
+                    elseif lastCharacters == " TextBox" then
+                        obj.Background.Input.Text = kocmoc[i][j]
+                    end
+                end
+            end
+            end
+    else
+        api.notify("Rosemoc " .. temptable.version, "No such config file!", 2)
+    end
+
+    local menuTabs = player.PlayerGui.ScreenGui.Menus.ChildTabs
+    local set_thread_identity = syn and syn.set_thread_identity or setthreadcontext or setidentity
+
+    if not set_thread_identity then
+        api.notify("Rosemoc " .. temptable.version, "your exploit only partially supports autoload!", 2)
+    else
+        for _,v in pairs(menuTabs:GetChildren()) do
+            if v:FindFirstChild("Icon") and v.Icon.Image == "rbxassetid://1436835355" then
+                set_thread_identity(2)
+                firesignal(v.MouseButton1Click)
+                set_thread_identity(7)
+            end
+        end
+    end
+
+task.spawn(function() --Sakata
+    while task.wait(1) do
+        writefile("kocmoc/recent.json", game:service("HttpService"):JSONEncode(kocmoc))
+    end
+end)
+
+
+local CoreGui = game:GetService("CoreGui")
+
+if type(gethui) == 'function' then
+	CoreGui = gethui()
+end
+
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+
+local GPUGUI = Instance.new("ScreenGui")
+GPUGUI.Name = 'GPUSaver'
+GPUGUI.Enabled = false
+GPUGUI.Parent = CoreGui
+
+local TextLabel = Instance.new("TextLabel")
+TextLabel.BackgroundColor3 = Color3.new(0, 0, 0)
+TextLabel.TextColor3 = Color3.new(1, 1, 1)
+TextLabel.TextStrokeTransparency = 1
+TextLabel.AnchorPoint = Vector2.new(.5, .5)
+TextLabel.Position = UDim2.fromScale(.5, .5)
+TextLabel.Size = UDim2.fromScale(1.5, 1.5)
+TextLabel.Font = Enum.Font.RobotoMono
+TextLabel.TextSize = 24
+TextLabel.Text = "GPU Saver is enabled.\n\nPress any key to disable manually."
+TextLabel.Parent = GPUGUI
+
+local Connections = {}
+local Signals = {RunService.Stepped, RunService.RenderStepped}
+
+local cansetfpscap = type(setfpscap) == 'function'
+local cangetconnections = type(getconnections) == 'function'
+local caniswindowactive = type(iswindowactive) == 'function'
+
+local function pause()
+    if kocmoc.toggles.gpusaver then
+	if cansetfpscap then
+		setfpscap(10)
+	end
+	GPUGUI.Enabled = true
+	RunService:Set3dRenderingEnabled(false)
+	if cangetconnections then
+		for _, x in pairs(Signals) do
+			for _, v in pairs(getconnections(x)) do
+				v:Disable()
+				table.insert(Connections, v)
+			end
+		end
+	end
+	paused = true
+	end
+end
+
+local function resume()
+	if cansetfpscap then
+		setfpscap(60)
+	end
+	GPUGUI.Enabled = false
+	RunService:Set3dRenderingEnabled(true)
+	if cangetconnections then
+		for i, v in pairs(Connections) do
+			v:Enable()
+			Connections[i] = nil
+		end
+	end
+	paused = false
+end
+
+local con0 = UserInputService.WindowFocusReleased:Connect(pause)
+local con1 = UserInputService.WindowFocused:Connect(resume)
+local con2 = UserInputService.InputBegan:Connect(function(input) if paused and input.UserInputState == Enum.UserInputState.Begin and input.UserInputType == Enum.UserInputType.Keyboard then resume(); end; end)
+
+if caniswindowactive and iswindowactive() ~= true then
+	pause()
+end
+
 if _G.autoload then
     if isfile("kocmoc/BSS_" .. _G.autoload .. ".json") then
         kocmoc = game:service("HttpService"):JSONDecode(readfile("kocmoc/BSS_" .. _G.autoload .. ".json"))
@@ -4702,6 +4854,8 @@ if _G.autoload then
         end
     end
 end
+
+
 
 for _, part in next, workspace:FindFirstChild("FieldDecos"):GetDescendants() do
     if part:IsA("BasePart") then
