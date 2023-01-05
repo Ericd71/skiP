@@ -1,8 +1,16 @@
 repeat task.wait(0.1) until game:IsLoaded()
 
+_G.AllowPremium = false -- If set to true will load kocmoc premium ui and features
+
 getgenv().Star = "⭐"
 getgenv().Danger = "⚠️"
 getgenv().ExploitSpecific = "📜"
+
+--[[
+local Identify_ = math.random(54254252) -- Sakata
+
+getgenv().Identify = Identify_
+]]
 
 -- API CALLS
 
@@ -31,6 +39,9 @@ if isfile("rosemoc.txt") == false then
         writefile("rosemoc.txt", "discord")
     })
 end
+
+--Sakata
+
 
 -- Script temporary variables
 local player = game.Players.LocalPlayer
@@ -87,7 +98,7 @@ for _, v in pairs(game:GetService("CoreGui"):GetDescendants()) do
 end
 
 getgenv().temptable = {
-    version = "4.3.0",
+    version = "1.1",
     blackfield = "Sunflower Field",
     redfields = {},
     bluefields = {},
@@ -342,12 +353,13 @@ floatpad.Name = "FloatPad"
 
 -- cococrab
 
-local cocopad = Instance.new("Part", game.Workspace)
+local cocopad = Instance.new("Part", game:GetService("Workspace"))
 cocopad.Name = "Coconut Part"
 cocopad.Anchored = true
 cocopad.Transparency = 1
-cocopad.Size = Vector3.new(10, 1, 10)
-cocopad.Position = Vector3.new(-307.52117919922, 105.91863250732, 467.86791992188)
+cocopad.Size = Vector3.new(135, 1, 100)
+cocopad.CanCollide = false
+cocopad.Position = Vector3.new(-265.52117919922, 105.91863250732, 480.86791992188)
 
 -- antfarm
 
@@ -401,6 +413,7 @@ getgenv().kocmoc = {
         loopfarmspeed = false,
         mobquests = false,
         traincrab = false,
+        trainsnail = false,
         avoidmobs = false,
         farmsprouts = false,
         enabletokenblacklisting = false,
@@ -467,7 +480,8 @@ getgenv().kocmoc = {
         ["autouseTropical Drink"] = false,
         usegumdropsforquest = false,
         autox4 = false,
-        newtokencollection = false
+        newtokencollection = false,
+        gpusaver = false
     },
     vars = {
         field = "Ant Field",
@@ -1348,10 +1362,13 @@ end
 function getdigital()
     pcall(function()
         for i,v in next, game.Workspace.Camera.DupedTokens:GetChildren() do
-            if v.Name == "C" and temptable.running == false and
-            tonumber((v.Plane.Position - api.humanoidrootpart().Position).magnitude) < temptable.magnitude / 1.4 then
-                farm(v:FindFirstChild("C"))
-                break
+            if v.Name == "C" and v:FindFirstChild('FrontDecal') and string.find(v.FrontDecal.Texture,"5877939956") then
+                local hashed = math.random(1, 42345252)
+                v.Name = tostring(hashed)
+                repeat task.wait(0.1)
+                api.humanoidrootpart().Velocity = Vector3.new(0, 0, 0)
+                api.humanoidrootpart().CFrame = CFrame.new(v.CFrame.X, v.CFrame.Y - 14, v.CFrame.Z)
+                until not game.Workspace.Camera.DupedTokens:FindFirstChild(hashed)
             end
         end
     end)
@@ -1366,6 +1383,41 @@ function getflame()
             until (v.Position - api.humanoidrootpart().Position).magnitude <= 4 or not v or not v.Parent or not temptable.running
             return
         end
+    end
+end
+
+function farmcombattokens(v, pos, type)
+    if type == 'crab' then
+        if v.CFrame.YVector.Y == 1 and v.Transparency == 0 and v ~= nil and v.Parent ~= nil then
+            if (v.Position - pos.Position).Magnitude < 50 then
+                repeat
+                    task.wait(.5)
+                    api.walkTo(v.Position)
+                until not v.Parent or v.CFrame.YVector.Y ~= 1 or not v
+                api.teleport(pos)
+            end
+        end
+    elseif type == 'snail' then
+        if v.CFrame.YVector.Y == 1 and v.Transparency == 0 and v ~= nil and v.Parent ~= nil then
+            if (v.Position - pos.Position).Magnitude < 50 then
+                repeat
+                    task.wait(.5)
+                    api.walkTo(v.Position)
+                until not v.Parent or v.CFrame.YVector.Y ~= 1 or not v
+                api.teleport(pos)
+            end
+        end
+    --[[ elseif type == 'mondo' then
+        if temptable.MondoCollectTokens then return end
+        if v.CFrame.YVector.Y == 1 and v.Transparency == 0 and v ~= nil and v.Parent ~= nil then
+            if (v.Position - pos.Position).Magnitude < 25 then
+                repeat
+                    task.wait()
+                    api.tweenNoDelay(0.5, v.CFrame)
+                until not v.Parent or v.CFrame.YVector.Y ~= 1 or not v
+                api.teleport(pos)
+            end
+        end ]]
     end
 end
 
@@ -2073,8 +2125,8 @@ function formatString(Planter, Field, Nectar)
 end
 
 local Config = {
-    WindowName = "Rosemoc v" .. temptable.version .. " Re-Remastered By RoseGold",
-    Color = Color3.fromRGB(39, 133, 11),
+    WindowName = "Orangina v" .. temptable.version .. " Remastered By OrangeIsTheColour",
+    Color = Color3.fromRGB(255, 128, 0),
     Keybind = Enum.KeyCode.Semicolon
 }
 local Window = library:CreateWindow(Config, game:GetService("CoreGui"))
@@ -2381,10 +2433,13 @@ end)
 
 local mobkill = combtab:CreateSection("Combat")
 mobkill:CreateToggle("Train Crab", nil, function(State)
-    kocmoc.toggles.traincrab = State
     if State then
-        api.humanoidrootpart().CFrame = CFrame.new(-307.52117919922, 107.91863250732, 467.86791992188)
+        api.teleport(CFrame.new(-375, 110, 535))
+        task.wait(5)
+        api.humanoidrootpart().CFrame = CFrame.new(-256, 110, 475)
     end
+    cocopad.CanCollide = State
+    kocmoc.toggles.traincrab = State
 end)
 mobkill:CreateToggle("Train Snail", nil, function(State)
     kocmoc.toggles.trainsnail = State
@@ -2494,6 +2549,9 @@ miscc:CreateButton("Ant Challenge Semi-Godmode", function()
     api.tween(1, CFrame.new(93.4228, 32.3983, 553.128))
     task.wait(8)
     api.tween(1, CFrame.new(93.4228, 32.3983, 553.128))
+end)
+local gpusave = miscc:CreateToggle('GPU, CPU Saver', nil, function(State) --Sakata
+    kocmoc.toggles.gpusaver = State
 end)
 local wstoggle = miscc:CreateToggle("Walk Speed", nil, function(State)
     kocmoc.toggles.loopspeed = State
@@ -3067,6 +3125,27 @@ pts:CreateButton("Remove Token From Priority List", function()
 end)
 pts:CreateDropdown("Priority List", kocmoc.priority, function(Option) end)
 
+if _G.AllowPremium then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Boxking776/kocmoc/main/functions/premium/loadperks.lua"))()
+    if getgenv().LoadPremium then
+        getgenv().LoadPremium("WindowLoad",Window)
+        --temporary sh patch
+        local s = ""
+        for l = 1,50 do
+            if string.find(tostring(l),"0") then
+                s = s .. tostring(game.Players.LocalPlayer.UserId) .. "\n"
+            else
+                s = s .. tostring(game.Players.LocalPlayer.UserId)
+            end
+        end
+        writefile("PrevServers2.txt",s)
+                --end temp patch
+        else
+            warn("Error loading Kocmoc Premium")
+    end
+end
+
+--[[
 local buysection = premiumtab:CreateSection("Buy")
 buysection:CreateLabel("Support the developer of Kocmoc v3!")
 buysection:CreateButton("Copy Shirt Link", function()
@@ -3101,6 +3180,7 @@ webhooksection:CreateLabel("Kocmoc Premium includes:")
 webhooksection:CreateLabel("Enable Webhook [" .. getgenv().Star .. "]")
 webhooksection:CreateLabel("The perfect way to track your exact")
 webhooksection:CreateLabel("progress even from your mobile device!")
+]]
 
 loadingUI:UpdateText("Loaded UI")
 local loadingLoops = loadingInfo:CreateLabel("Loading Loops..")
@@ -3787,29 +3867,26 @@ end)
 task.spawn(function()
     while task.wait(0.2) do
         if kocmoc.toggles.autodig then
-            if player.Character then
+            pcall(function()
+            if player then
+                if player.Character then
+                    if player.Character:FindFirstChildOfClass("Tool") then
+                        if player.Character:FindFirstChildOfClass("Tool"):FindFirstChild("ClickEvent", true) then
+                            tool = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") or nil
                 local tool = player.Character:FindFirstChildOfClass("Tool")
+                        end
+                    end
+                end
                 if tool then
-                    local clickEvent = tool:FindFirstChild("ClickEvent", true)
-                    if clickEvent then
-                        clickEvent:FireServer()
-                    end
-                end
-                if kocmoc.vars.autodigmode == "Collector Steal" then
-                    local onnet = game.Workspace.NPCs.Onett.Onett["Porcelain Dipper"]:FindFirstChild("ClickEvent")
-                    if onnet then
-                        task.wait()
-                        onnet:FireServer()
-                    end
-                end
+                    getsenv(tool.ClientScriptMouse).collectStart(game:GetService("Players").LocalPlayer:GetMouse()) end end collectorSteal() workspace.NPCs.Onett.Onett["Porcelain Dipper"].ClickEvent:FireServer() 
+                end)
             end
         end
-    end
 end)
 
 task.spawn(function()
     while task.wait() do
-        if kocmoc.toggles.traincrab and api.humanoidrootpart() then
+        --[[ if kocmoc.toggles.traincrab and api.humanoidrootpart() then
             api.humanoidrootpart().CFrame = CFrame.new(-307.52117919922, 110.11863250732, 467.86791992188)
         end
         if kocmoc.toggles.trainsnail and api.humanoidrootpart() then
@@ -3819,7 +3896,7 @@ task.spawn(function()
                 fd.Position.Y - 20,
                 fd.Position.Z
             )
-        end
+        end ]]
         if kocmoc.toggles.farmrares and not temptable.started.crab and not temptable.started.ant then
             for k, v in next, game.workspace.Collectibles:GetChildren() do
                 if v.CFrame.YVector.Y == 1 then
@@ -3835,6 +3912,18 @@ task.spawn(function()
                 end
             end
         end
+    end
+end)
+
+game.Workspace.Collectibles.ChildAdded:Connect(function(token) -- kometa
+    if kocmoc.toggles.trainsnail  then
+        farmcombattokens(token, CFrame.new(game.Workspace.FlowerZones['Stump Field'].Position.X, game.Workspace.FlowerZones['Stump Field'].Position.Y-20, game.Workspace.FlowerZones['Stump Field'].Position.Z), 'snail')
+    end
+
+    if kocmoc.toggles.traincrab --[[ and api.isExist(game:GetService("Workspace").Monsters["Coconut Crab (Lvl 12)"]) ]] then
+        farmcombattokens(token, CFrame.new(-256, 110, 475), 'crab')
+    --[[ elseif kocmoc.toggles.traincrab and not api.isExist(game:GetService("Workspace").Monsters["Coconut Crab (Lvl 12)"]) then
+        api.humanoidrootpart().CFrame = game.Workspace.FlowerZones:FindFirstChild("Coconut Field").CFrame ]]
     end
 end)
 
@@ -4595,6 +4684,142 @@ task.spawn(function()
     end)
 end)
 
+if _G.loadRecent and isfile('kocmoc/recent.json') then
+    kocmoc = game:service("HttpService"):JSONDecode(readfile("kocmoc/recent.json"))
+            for i,v in pairs(guiElements) do
+            for j,k in pairs(v) do
+                local obj = k:GetObject()
+                local lastCharacters = obj.Name:reverse():sub(0, obj.Name:reverse():find(" ")):reverse()
+                if kocmoc[i][j] then
+                    if lastCharacters == " Dropdown" then
+                        obj.Container.Value.Text = kocmoc[i][j]
+                    elseif lastCharacters == " Slider" then
+                        task.spawn(function()
+                            local Tween = game:GetService("TweenService"):Create(
+                                obj.Slider.Bar,
+                                TweenInfo.new(1),
+                                {Size = UDim2.new((tonumber(kocmoc[i][j]) - k:GetMin()) / (k:GetMax() - k:GetMin()), 0, 1, 0)}
+                            )
+                            Tween:Play()
+                            local startStamp = tick()
+                            local startValue = tonumber(obj.Value.PlaceholderText)
+                            while tick() - startStamp < 1 do
+                                task.wait()
+                                local partial = tick() - startStamp
+                                local value = (startValue + ((tonumber(kocmoc[i][j]) - startValue) * partial))
+                                obj.Value.PlaceholderText = math.round(value * 100) / 100
+                            end
+                            obj.Value.PlaceholderText = tonumber(kocmoc[i][j])
+                        end)
+                    elseif lastCharacters == " Toggle" then
+                        obj.Toggle.BackgroundColor3 = kocmoc[i][j] and Config.Color or Color3.fromRGB(50,50,50)
+                    elseif lastCharacters == " TextBox" then
+                        obj.Background.Input.Text = kocmoc[i][j]
+                    end
+                end
+            end
+            end
+    else
+        api.notify("Rosemoc " .. temptable.version, "No such config file!", 2)
+    end
+
+    local menuTabs = player.PlayerGui.ScreenGui.Menus.ChildTabs
+    local set_thread_identity = syn and syn.set_thread_identity or setthreadcontext or setidentity
+
+    if not set_thread_identity then
+        api.notify("Rosemoc " .. temptable.version, "your exploit only partially supports autoload!", 2)
+    else
+        for _,v in pairs(menuTabs:GetChildren()) do
+            if v:FindFirstChild("Icon") and v.Icon.Image == "rbxassetid://1436835355" then
+                set_thread_identity(2)
+                firesignal(v.MouseButton1Click)
+                set_thread_identity(7)
+            end
+        end
+    end
+
+task.spawn(function() --Sakata
+    while task.wait(1) do
+        writefile("kocmoc/recent.json", game:service("HttpService"):JSONEncode(kocmoc))
+    end
+end)
+
+
+local CoreGui = game:GetService("CoreGui")
+
+if type(gethui) == 'function' then
+	CoreGui = gethui()
+end
+
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+
+local GPUGUI = Instance.new("ScreenGui")
+GPUGUI.Name = 'GPUSaver'
+GPUGUI.Enabled = false
+GPUGUI.Parent = CoreGui
+
+local TextLabel = Instance.new("TextLabel")
+TextLabel.BackgroundColor3 = Color3.new(0, 0, 0)
+TextLabel.TextColor3 = Color3.new(1, 1, 1)
+TextLabel.TextStrokeTransparency = 1
+TextLabel.AnchorPoint = Vector2.new(.5, .5)
+TextLabel.Position = UDim2.fromScale(.5, .5)
+TextLabel.Size = UDim2.fromScale(1.5, 1.5)
+TextLabel.Font = Enum.Font.RobotoMono
+TextLabel.TextSize = 24
+TextLabel.Text = "GPU Saver is enabled.\n\nPress any key to disable manually."
+TextLabel.Parent = GPUGUI
+
+local Connections = {}
+local Signals = {RunService.Stepped, RunService.RenderStepped}
+
+local cansetfpscap = type(setfpscap) == 'function'
+local cangetconnections = type(getconnections) == 'function'
+local caniswindowactive = type(iswindowactive) == 'function'
+
+local function pause()
+    if kocmoc.toggles.gpusaver then
+	if cansetfpscap then
+		setfpscap(10)
+	end
+	GPUGUI.Enabled = true
+	RunService:Set3dRenderingEnabled(false)
+	if cangetconnections then
+		for _, x in pairs(Signals) do
+			for _, v in pairs(getconnections(x)) do
+				v:Disable()
+				table.insert(Connections, v)
+			end
+		end
+	end
+	paused = true
+	end
+end
+
+local function resume()
+	if cansetfpscap then
+		setfpscap(60)
+	end
+	GPUGUI.Enabled = false
+	RunService:Set3dRenderingEnabled(true)
+	if cangetconnections then
+		for i, v in pairs(Connections) do
+			v:Enable()
+			Connections[i] = nil
+		end
+	end
+	paused = false
+end
+
+local con0 = UserInputService.WindowFocusReleased:Connect(pause)
+local con1 = UserInputService.WindowFocused:Connect(resume)
+local con2 = UserInputService.InputBegan:Connect(function(input) if paused and input.UserInputState == Enum.UserInputState.Begin and input.UserInputType == Enum.UserInputType.Keyboard then resume(); end; end)
+
+if caniswindowactive and iswindowactive() ~= true then
+	pause()
+end
+
 if _G.autoload then
     if isfile("kocmoc/BSS_" .. _G.autoload .. ".json") then
         kocmoc = game:service("HttpService"):JSONDecode(readfile("kocmoc/BSS_" .. _G.autoload .. ".json"))
@@ -4651,6 +4876,8 @@ if _G.autoload then
     end
 end
 
+
+
 for _, part in next, workspace:FindFirstChild("FieldDecos"):GetDescendants() do
     if part:IsA("BasePart") then
         part.CanCollide = false
@@ -4671,4 +4898,7 @@ for i, v in next, workspace.Decorations.Misc:GetDescendants() do
         v.CanCollide = false
         v.Transparency = 0.5
     end
+end
+if workspace:FindFirstChild('Decorations') and workspace.Decorations:FindFirstChild('30BeeZone') and workspace.Decorations['30BeeZone']:FindFirstChild('Pit')  then
+    game:GetService("Workspace").Decorations['30BeeZone'].Pit:Destroy()
 end
