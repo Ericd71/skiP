@@ -505,8 +505,8 @@ getgenv().kocmoc = {
         resettimer = 3,
         questcolorprefer = "Any NPC",
         playertofollow = "",
-        convertballoonpercent = 50,
-        planterharvestamount = 75,
+        convertballoonpercent = 0,
+        planterharvestamount = 50,
         webhookurl = "",
         discordid = 0,
         webhooktimer = 60,
@@ -1190,7 +1190,7 @@ function collectplanters()
             local soil = api.partwithnamepart(v, game.Workspace.Planters).Soil
             api.humanoidrootpart().CFrame = soil.CFrame
             game:GetService("ReplicatedStorage").Events.PlanterModelCollect:FireServer(planterst.planterid[i])
-            task.wait(.5)
+            task.wait(5)
             playeractivescommand:FireServer({["Name"] = v .. " Planter"})
             for i = 1, 5 do gettoken(soil.Position) end
             task.wait(2)
@@ -1789,8 +1789,8 @@ local planterData = deepcopy(fullPlanterData)
 local nectarData = {
     Refreshing = {"Blue Flower Field", "Strawberry Field", "Coconut Field"},
     Invigorating = {"Clover Field", "Cactus Field", "Mountain Top Field", "Pepper Patch"},
-    Comforting = {"Dandelion Field", "Bamboo Field", "Pine Tree Forest"},
-    Motivating = {"Mushroom Field", "Spider Field", "Stump Field", "Rose Field"},
+    Comforting = {"Pine Tree Forest", "Bamboo Field", "Dandelion Field"},
+    Motivating = {"Spider Field", "Mushroom Field", "Stump Field", "Rose Field"},
     Satisfying = {"Sunflower Field", "Pineapple Patch", "Pumpkin Patch"}
 }
 
@@ -2162,9 +2162,8 @@ information:CreateLabel("Script version: " .. temptable.version)
 information:CreateLabel(Danger.." - Not Safe Function")
 information:CreateLabel("⚙ - Configurable Function")
 information:CreateLabel("📜 - May be exploit specific")
-information:CreateLabel("v4 by RoseGold#5441")
+information:CreateLabel("v1.1 by OrangeIsTheColour")
 information:CreateLabel("Script by Boxking776")
-information:CreateLabel("Originally by weuz_ and mrdevl")
 local gainedhoneylabel = information:CreateLabel("Gained Honey: 0")
 local uptimelabel = information:CreateLabel("Uptime: 0")
 information:CreateButton("Discord Invite", function()
