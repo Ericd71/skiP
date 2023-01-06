@@ -4,6 +4,7 @@ repeat task.wait(0.1) until game:IsLoaded()
 getgenv().Star = "⭐"
 getgenv().Danger = "⚠️"
 getgenv().ExploitSpecific = "📜"
+getgenv().Beesmas = "🎄"
 
 --[[
 local Identify_ = math.random(54254252) -- Sakata
@@ -386,6 +387,9 @@ getgenv().kocmoc = {
     toggles = {
         autofarm = false,
         farmclosestleaf = false,
+        farmfireflies = false,
+        farmleaves = false,
+        farmsparkles = false,
         farmbubbles = false,
         autodig = false,
         farmrares = false,
@@ -426,6 +430,7 @@ getgenv().kocmoc = {
         convertballoons = false,
         autostockings = false,
         autosamovar = false,
+        autosnowmachine = false,
         autohoneywreath = false,
         autoonettart = false,
         autocandles = false,
@@ -1276,10 +1281,37 @@ function converthoney()
 end
 
 function closestleaf()
-    for i, v in next, game.Workspace.Flowers:GetChildren() do
-        if temptable.running == false and tonumber((v.Position - player.Character.HumanoidRootPart.Position).magnitude) < temptable.magnitude / 1.4 then
+    for i, v in next, game.Workspace.Flowers:GetDescendants() do
+        if v.Name == "Leaf Burst" and v.Parent:IsA("Part") and v.Parent then
+            if temptable.running == false and tonumber((v.Position - player.Character.HumanoidRootPart.Position).magnitude) < temptable.magnitude / 1.4 then
+                farm(v.Parent)
+                break
+            end
+        else
+            continue
+        end
+    end
+end
+
+
+function getfireflies()
+    for i,v in next, game:GetService("Workspace").NPCBees:GetChildren() do
+        if v.Name == "Firefly" then
+            api.humanoidrootpart().CFrame = CFrame.new(v.Position)
+        else 
+            continue
+        end
+    end
+end
+
+function getsparkles()
+    for i,v in next, game.Workspace.Flowers:GetDescendants() do
+        if (v.Name == "Sparkles") and (v.Parent:IsA("Part")) and (v.Parent) then
+            api.humanoidrootpart().CFrame = CFrame.new(v.Parent.Position)
+            task.wait(1)
             farm(v)
-            break
+        else
+            continue
         end
     end
 end
@@ -2164,6 +2196,7 @@ information:CreateLabel("Script version: " .. temptable.version)
 information:CreateLabel(Danger.." - Not Safe Function")
 information:CreateLabel("⚙ - Configurable Function")
 information:CreateLabel("📜 - May be exploit specific")
+information:CreateLabel(Beesmas.." - Beesmas Function")
 information:CreateLabel("v4 by RoseGold#5441")
 information:CreateLabel("Script by Boxking776")
 information:CreateLabel("Originally by weuz_ and mrdevl")
@@ -2239,19 +2272,23 @@ end)
 guiElements["vars"]["playertofollow"] = farmo:CreateTextBox("Player to Follow", "player name", false, function(Value)
     kocmoc.vars.playertofollow = Value
 end)
--- farmo:CreateToggle("Farm Closest Leaves", nil, function(State) kocmoc.toggles.farmclosestleaf = State end)
+farmo:CreateToggle("Farm Closest Leaves", nil, function(State) kocmoc.toggles.farmclosestleaf = State end)
+--[[ farmo:CreateToggle("Auto Fireflies", nil, function(State) kocmoc.toggles.farmfireflies = State end) ]]
+--[[ farmo:CreateToggle("Auto Sparkles", nil, function(State) kocmoc.toggles.farmsparkles = State end) ]]
+farmo:CreateToggle("Farm All Leaves ["..Danger.."]", nil, function(State) kocmoc.toggles.farmleaves = State end)
 
 local farmt = farmtab:CreateSection("Farming")
 guiElements["toggles"]["autodispense"] = farmt:CreateToggle("Auto Dispenser [⚙]", nil, function(State) kocmoc.toggles.autodispense = State end)
 guiElements["toggles"]["autoboosters"] = farmt:CreateToggle("Auto Field Boosters [⚙]", nil, function(State) kocmoc.toggles.autoboosters = State end)
 guiElements["toggles"]["clock"] = farmt:CreateToggle("Auto Wealth Clock", nil, function(State) kocmoc.toggles.clock = State end)
-farmt:CreateToggle("Auto Gingerbread Bears", nil, function(State) kocmoc.toggles.collectgingerbreads = State end)
-farmt:CreateToggle("Auto Samovar", nil, function(State) kocmoc.toggles.autosamovar = State end)
-farmt:CreateToggle("Auto Honey Wreath", nil, function(State) kocmoc.toggles.autohoneywreath = State end)
-farmt:CreateToggle("Auto Stockings", nil, function(State) kocmoc.toggles.autostockings = State end)
-farmt:CreateToggle("Auto Honey Candles", nil, function(State) kocmoc.toggles.autocandles = State end)
-farmt:CreateToggle("Auto Beesmas Feast", nil, function(State) kocmoc.toggles.autofeast = State end)
-farmt:CreateToggle("Auto Onett's Lid Art", nil, function(State) kocmoc.toggles.autoonettart = State end)
+farmt:CreateToggle("Auto Gingerbread Bears ["..Beesmas.."]", nil, function(State) kocmoc.toggles.collectgingerbreads = State end)
+farmt:CreateToggle("Auto Samovar ["..Beesmas.."]", nil, function(State) kocmoc.toggles.autosamovar = State end)
+farmt:CreateToggle("Auto Snow Machine ["..Beesmas.."]", nil, function(State) kocmoc.toggles.autosnowmachine = State end)
+farmt:CreateToggle("Auto Honey Wreath ["..Beesmas.."]", nil, function(State) kocmoc.toggles.autohoneywreath = State end)
+farmt:CreateToggle("Auto Stockings ["..Beesmas.."]", nil, function(State) kocmoc.toggles.autostockings = State end)
+farmt:CreateToggle("Auto Honey Candles ["..Beesmas.."]", nil, function(State) kocmoc.toggles.autocandles = State end)
+farmt:CreateToggle("Auto Beesmas Feast ["..Beesmas.."]", nil, function(State) kocmoc.toggles.autofeast = State end)
+farmt:CreateToggle("Auto Onett's Lid Art ["..Beesmas.."]", nil, function(State) kocmoc.toggles.autoonettart = State end)
 guiElements["toggles"]["freeantpass"] = farmt:CreateToggle("Auto Free Antpasses", nil, function(State) kocmoc.toggles.freeantpass = State end)
 guiElements["toggles"]["freerobopass"] = farmt:CreateToggle("Auto Free Robopasses", nil, function(State) kocmoc.toggles.freerobopass = State end)
 guiElements["toggles"]["farmsprouts"] = farmt:CreateToggle("Farm Sprouts", nil, function(State) kocmoc.toggles.farmsprouts = State end)
@@ -3640,6 +3677,12 @@ task.spawn(function()
                         if kocmoc.toggles.farmclosestleaf then
                             closestleaf()
                         end
+                        if kocmoc.toggles.farmfireflies then
+                            getfireflies()
+                        end
+                        if kocmoc.toggles.farmsparkles then
+                            getsparkles()
+                        end
                         if kocmoc.toggles.farmclouds then
                             getcloud()
                         end
@@ -3952,6 +3995,9 @@ end)
 task.spawn(function()
     while task.wait(0.1) do
         if not temptable.converting then
+            if kocmoc.toggles.autosnowmachine then
+                game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Snow Machine")
+            end
             if kocmoc.toggles.autosamovar then
                 game:GetService("ReplicatedStorage").Events.ToyEvent:FireServer("Samovar")
                 platformm = game.Workspace.Toys.Samovar.Platform
@@ -4149,11 +4195,17 @@ task.spawn(function()
         if kocmoc.toggles.farmsnowflakes then
             task.wait(3)
             for i, v in next, temptable.tokenpath:GetChildren() do
-                if v:FindFirstChildOfClass("Decal") and
-                    v:FindFirstChildOfClass("Decal").Texture ==
-                    "rbxassetid://6087969886" and v.Transparency == 0 then
-                    api.humanoidrootpart().CFrame =
-                        CFrame.new(v.Position.X, v.Position.Y + 3, v.Position.Z)
+                if v:FindFirstChildOfClass("Decal") and v:FindFirstChildOfClass("Decal").Texture == "rbxassetid://6087969886" and v.Transparency == 0 then
+                    api.humanoidrootpart().CFrame = CFrame.new(v.Position.X, v.Position.Y + 3, v.Position.Z)
+                    break
+                end
+            end
+        end
+        if kocmoc.toggles.farmleaves then
+            task.wait(3)
+            for i,v in next, game.Workspace.Flowers:GetDescendants() do
+                if v.Name == "LeafBurst" and v.Parent:IsA("Part") and v.Parent then
+                    api.humanoidrootpart().CFrame = CFrame.new(v.Parent.Position)
                     break
                 end
             end
@@ -4894,4 +4946,7 @@ for i, v in next, workspace.Decorations.Misc:GetDescendants() do
 end
 if workspace:FindFirstChild('Decorations') and workspace.Decorations:FindFirstChild('30BeeZone') and workspace.Decorations['30BeeZone']:FindFirstChild('Pit')  then
     game:GetService("Workspace").Decorations['30BeeZone'].Pit:Destroy()
+end
+if workspace:FindFirstChild("Gates") and workspace.Gates:FindFirstChild("15 Bee Gate") and workspace.Gates["15 Bee Gate"]:FindFirstChild("Frame") then
+    game:GetService("Workspace").Gates["15 Bee Gate"].Frame:Destroy()
 end
