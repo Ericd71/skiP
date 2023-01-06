@@ -3844,7 +3844,7 @@ task.spawn(function()
 end)
 
 task.spawn(function()
-    while task.wait(0.2) do
+    while task.wait(0.05) do
         if kocmoc.toggles.autodig then
             pcall(function()
             if player then
