@@ -2229,7 +2229,7 @@ local autofarmtoggle = farmo:CreateToggle("Autofarm [⚙]", nil, function(State)
     kocmoc.toggles.autofarm = State
 end)
 guiElements["toggles"]["autofarm"] = autofarmtoggle
-autofarmtoggle:CreateKeybind("U", function(Key) end)
+autofarmtoggle:CreateKeybind(nil, function(Key) end)
 guiElements["toggles"]["autodig"] = farmo:CreateToggle("Autodig", nil, function(State)
     kocmoc.toggles.autodig = State
 end)
@@ -2596,12 +2596,12 @@ end)
 local wstoggle = miscc:CreateToggle("Walk Speed", nil, function(State)
     kocmoc.toggles.loopspeed = State
 end)
-wstoggle:CreateKeybind("K", function(Key) end)
+wstoggle:CreateKeybind(nil, function(Key) end)
 guiElements["toggles"]["loopspeed"] = wstoggle
 local jptoggle = miscc:CreateToggle("Jump Power", nil, function(State)
     kocmoc.toggles.loopjump = State
 end)
-jptoggle:CreateKeybind("L", function(Key) end)
+jptoggle:CreateKeybind(nil, function(Key) end)
 guiElements["toggles"]["loopjump"] = jptoggle
 guiElements["toggles"]["godmode"] = miscc:CreateToggle("Godmode", nil, function(State)
     kocmoc.toggles.godmode = State
