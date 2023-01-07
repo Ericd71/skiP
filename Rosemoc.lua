@@ -500,6 +500,7 @@ getgenv().kocmoc = {
         monstertimer = 15,
         autodigmode = "Normal",
         autococoshowermode = "Tween",
+        autocrosshairmode = "Teleport",
         donoItem = "Coconut",
         donoAmount = 25,
         selectedTreat = "Treat",
@@ -1503,7 +1504,7 @@ function docrosshairs()
                         local save_height = v.Position.y
                         repeat
                             task.wait()
-                            api.tween(1, CFrame.new(v.Position))
+                            api.humanoidrootpart().CFrame = CFrame.new(v.Position)
                         until not v or not v.Parent or v.Position.y ~= save_height
                     end
                 else
@@ -1529,6 +1530,7 @@ function docrosshairs()
         end
     end
 end
+
 
 function makequests()
     for i, v in next, game.Workspace.NPCs:GetChildren() do
@@ -2259,10 +2261,13 @@ guiElements["toggles"]["farmflame"] = farmo:CreateToggle("Farm Flames", nil, fun
 guiElements["toggles"]["farmcoco"] = farmo:CreateToggle("Farm Coconuts & Shower", nil, function(State)
     kocmoc.toggles.farmcoco = State
 end)
-guiElements["vars"]["autoshowercocomode"] = farmo:CreateDropdown("Auto Shower/Coco Mode", {"Tween", "Teleport"}, function(Optionshower) kocmoc.vars.autococoshowermode = Optionshower end)
+guiElements["vars"]["autoshowercocomode"] = farmo:CreateDropdown("Auto Shower/Coco Mode", {"Tween", "Teleport ["..Danger.."]"}, function(Optionshower) kocmoc.vars.autococoshowermode = Optionshower end)
 guiElements["toggles"]["farmdigital"] = farmo:CreateToggle("Farm Digital Bee", nil, function(State) kocmoc.toggles.farmdigital = State end)
 guiElements["toggles"]["collectcrosshairs"] = farmo:CreateToggle("Farm Precise Crosshairs", nil, function(State) kocmoc.toggles.collectcrosshairs = State end)
-guiElements["toggles"]["fastcrosshairs"] = farmo:CreateToggle("Smart Precise Crosshairs ["..Danger.."]", nil, function(State) kocmoc.toggles.fastcrosshairs = State end)
+guiElements["toggles"]["fastcrosshairs"] = farmo:CreateToggle("Smart Precise Crosshairs", nil, function(State)
+    kocmoc.toggles.fastcrosshairs = State
+end)
+--[[ guiElements["vars"]["autocrosshairmode"] = farmo:CreateDropdown("Auto Crosshair Mode", {"Tween", "Teleport ["..Danger.."]"}, function(Optioncrosshair) kocmoc.vars.autocrosshairmode = Optioncrosshair end) ]]
 guiElements["toggles"]["farmfuzzy"] = farmo:CreateToggle("Farm Fuzzy Bombs", nil, function(State) kocmoc.toggles.farmfuzzy = State end)
 guiElements["toggles"]["farmunderballoons"] = farmo:CreateToggle("Farm Under Balloons", nil, function(State) kocmoc.toggles.farmunderballoons = State end)
 guiElements["toggles"]["farmclouds"] = farmo:CreateToggle("Farm Under Clouds", nil, function(State) kocmoc.toggles.farmclouds = State end)
