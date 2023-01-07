@@ -499,6 +499,7 @@ getgenv().kocmoc = {
         farmtype = "Walk",
         monstertimer = 15,
         autodigmode = "Normal",
+        autococoshowermode = "Tween",
         donoItem = "Coconut",
         donoAmount = 25,
         selectedTreat = "Treat",
@@ -1502,7 +1503,7 @@ function docrosshairs()
                         local save_height = v.Position.y
                         repeat
                             task.wait()
-                            api.humanoidrootpart().CFrame = CFrame.new(v.Position)
+                            api.tween(1, CFrame.new(v.Position))
                         until not v or not v.Parent or v.Position.y ~= save_height
                     end
                 else
@@ -2197,16 +2198,16 @@ information:CreateLabel(Danger.." - Not Safe Function")
 information:CreateLabel("⚙ - Configurable Function")
 information:CreateLabel("📜 - May be exploit specific")
 information:CreateLabel(Beesmas.." - Beesmas Function")
-information:CreateLabel("v1.1 by OrangeIsTheColour#4868")
+information:CreateLabel("v4 by RoseGold#5441")
 information:CreateLabel("Script by Boxking776")
 information:CreateLabel("Originally by weuz_ and mrdevl")
 local gainedhoneylabel = information:CreateLabel("Gained Honey: 0")
 local uptimelabel = information:CreateLabel("Uptime: 0")
 information:CreateButton("Discord Invite", function()
-    setclipboard("https://discord.gg/kTNMzbxUuZ")
+    setclipboard("https://discord.gg/BMmfQ6ZUxP")
 end)
 information:CreateButton("Donation", function()
-    setclipboard("https://www.paypal.com/paypalme/GHubPay")
+    setclipboard("https://www.paypal.com/paypalme/oranginabss")
 end)
 guiElements["toggles"]["enablestatuspanel"] = information:CreateToggle("Status Panel", true, function(bool)
     kocmoc.toggles.enablestatuspanel = bool
@@ -2235,6 +2236,7 @@ guiElements["toggles"]["autodig"] = farmo:CreateToggle("Autodig", nil, function(
 end)
 guiElements["vars"]["autodigmode"] = farmo:CreateDropdown("Autodig Mode", {"Normal", "Collector Steal"}, function(Option) kocmoc.vars.autodigmode = Option end)
 
+
 local contt = farmtab:CreateSection("Container Tools")
 guiElements["toggles"]["disableconversion"] = contt:CreateToggle("Don't Convert Pollen", nil, function(State)
     kocmoc.toggles.disableconversion = State
@@ -2254,7 +2256,10 @@ end)
 guiElements["toggles"]["autosprinkler"] = farmo:CreateToggle("Auto Sprinkler", nil, function(State) kocmoc.toggles.autosprinkler = State end)
 guiElements["toggles"]["farmbubbles"] = farmo:CreateToggle("Farm Bubbles", nil, function(State) kocmoc.toggles.farmbubbles = State end)
 guiElements["toggles"]["farmflame"] = farmo:CreateToggle("Farm Flames", nil, function(State) kocmoc.toggles.farmflame = State end)
-guiElements["toggles"]["farmcoco"] = farmo:CreateToggle("Farm Coconuts & Shower", nil, function(State) kocmoc.toggles.farmcoco = State end)
+guiElements["toggles"]["farmcoco"] = farmo:CreateToggle("Farm Coconuts & Shower", nil, function(State)
+    kocmoc.toggles.farmcoco = State
+end)
+guiElements["vars"]["autoshowercocomode"] = farmo:CreateDropdown("Auto Shower/Coco Mode", {"Tween", "Teleport"}, function(Optionshower) kocmoc.vars.autococoshowermode = Optionshower end)
 guiElements["toggles"]["farmdigital"] = farmo:CreateToggle("Farm Digital Bee", nil, function(State) kocmoc.toggles.farmdigital = State end)
 guiElements["toggles"]["collectcrosshairs"] = farmo:CreateToggle("Farm Precise Crosshairs", nil, function(State) kocmoc.toggles.collectcrosshairs = State end)
 guiElements["toggles"]["fastcrosshairs"] = farmo:CreateToggle("Smart Precise Crosshairs ["..Danger.."]", nil, function(State) kocmoc.toggles.fastcrosshairs = State end)
@@ -3269,16 +3274,25 @@ game.Workspace.Particles.ChildAdded:Connect(function(v)
             if v.BrickColor == BrickColor.new("Lime green") then
                 task.wait(1.25)
                 if (v.Position - api.humanoidrootpart().Position).magnitude > 100 then return end
-                if temptable.lookat then
-                    api.humanoidrootpart().Velocity = Vector3.new(0, 0, 0)
-                    api.humanoidrootpart().CFrame = CFrame.new(v.CFrame.p, temptable.lookat)
+                if kocmoc.vars.autococoshowermode == "Teleport" then
+                    if temptable.lookat then
+                        api.humanoidrootpart().Velocity = Vector3.new(0, 0, 0)
+                        api.humanoidrootpart().CFrame = CFrame.new(v.CFrame.p, temptable.lookat)
+                        task.wait()
+                        api.humanoidrootpart().CFrame = CFrame.new(v.CFrame.p, temptable.lookat)
+                    else
+                        api.humanoidrootpart().Velocity = Vector3.new(0, 0, 0)
+                        api.humanoidrootpart().CFrame = CFrame.new(v.CFrame.p)
+                        task.wait()
+                        api.humanoidrootpart().CFrame = CFrame.new(v.CFrame.p)
+                    end
+                elseif kocmoc.vars.autococoshowermode == "Tween" then
+                    api.tween(0.1, v.CFrame)
+                    --[[ api.humanoidrootpart().Velocity = Vector3.new(0, 0, 0) ]]
+                    --[[ api.humanoidrootpart().CFrame = CFrame.new(v.CFrame.p) ]]
                     task.wait()
-                    api.humanoidrootpart().CFrame = CFrame.new(v.CFrame.p, temptable.lookat)
-                else
-                    api.humanoidrootpart().Velocity = Vector3.new(0, 0, 0)
-                    api.humanoidrootpart().CFrame = CFrame.new(v.CFrame.p)
-                    task.wait()
-                    api.humanoidrootpart().CFrame = CFrame.new(v.CFrame.p)
+                    --[[ api.humanoidrootpart().CFrame = CFrame.new(v.CFrame.p) ]]
+                    api.tween(0.1, v.CFrame)
                 end
             end
         elseif v.Name == "Crosshair" and kocmoc.toggles.collectcrosshairs then
@@ -3899,15 +3913,19 @@ task.spawn(function()
                     if player.Character:FindFirstChildOfClass("Tool") then
                         if player.Character:FindFirstChildOfClass("Tool"):FindFirstChild("ClickEvent", true) then
                             tool = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") or nil
-                local tool = player.Character:FindFirstChildOfClass("Tool")
+                            local tool = player.Character:FindFirstChildOfClass("Tool")
                         end
                     end
                 end
                 if tool then
-                    getsenv(tool.ClientScriptMouse).collectStart(game:GetService("Players").LocalPlayer:GetMouse()) end end collectorSteal() workspace.NPCs.Onett.Onett["Porcelain Dipper"].ClickEvent:FireServer() 
-                end)
-            end
+                getsenv(tool.ClientScriptMouse).collectStart(game:GetService("Players").LocalPlayer:GetMouse())
+                end 
+                end
+                collectorSteal()
+                workspace.NPCs.Onett.Onett["Porcelain Dipper"].ClickEvent:FireServer() 
+            end)
         end
+    end
 end)
 
 task.spawn(function()
