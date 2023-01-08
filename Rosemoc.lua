@@ -499,8 +499,6 @@ getgenv().kocmoc = {
         farmtype = "Walk",
         monstertimer = 15,
         autodigmode = "Normal",
-        autococoshowermode = "Teleport",
-        autocrosshairmode = "Teleport",
         donoItem = "Coconut",
         donoAmount = 25,
         selectedTreat = "Treat",
@@ -2261,13 +2259,12 @@ guiElements["toggles"]["farmflame"] = farmo:CreateToggle("Farm Flames", nil, fun
 guiElements["toggles"]["farmcoco"] = farmo:CreateToggle("Farm Coconuts & Shower", nil, function(State)
     kocmoc.toggles.farmcoco = State
 end)
-guiElements["vars"]["autoshowercocomode"] = farmo:CreateDropdown("Auto Shower/Coco Mode", {"Tween", "Teleport ["..Danger.."]"}, function(Optionshower) kocmoc.vars.autococoshowermode = Optionshower end)
 guiElements["toggles"]["farmdigital"] = farmo:CreateToggle("Farm Digital Bee", nil, function(State) kocmoc.toggles.farmdigital = State end)
 guiElements["toggles"]["collectcrosshairs"] = farmo:CreateToggle("Farm Precise Crosshairs", nil, function(State) kocmoc.toggles.collectcrosshairs = State end)
 guiElements["toggles"]["fastcrosshairs"] = farmo:CreateToggle("Smart Precise Crosshairs", nil, function(State)
     kocmoc.toggles.fastcrosshairs = State
 end)
---[[ guiElements["vars"]["autocrosshairmode"] = farmo:CreateDropdown("Auto Crosshair Mode", {"Tween", "Teleport ["..Danger.."]"}, function(Optioncrosshair) kocmoc.vars.autocrosshairmode = Optioncrosshair end) ]]
+
 guiElements["toggles"]["farmfuzzy"] = farmo:CreateToggle("Farm Fuzzy Bombs", nil, function(State) kocmoc.toggles.farmfuzzy = State end)
 guiElements["toggles"]["farmunderballoons"] = farmo:CreateToggle("Farm Under Balloons", nil, function(State) kocmoc.toggles.farmunderballoons = State end)
 guiElements["toggles"]["farmclouds"] = farmo:CreateToggle("Farm Under Clouds", nil, function(State) kocmoc.toggles.farmclouds = State end)
@@ -3279,7 +3276,6 @@ game.Workspace.Particles.ChildAdded:Connect(function(v)
             if v.BrickColor == BrickColor.new("Lime green") then
                 task.wait(1.25)
                 if (v.Position - api.humanoidrootpart().Position).magnitude > 100 then return end
-                if kocmoc.vars.autococoshowermode == "Teleport" then
                     if temptable.lookat then
                         api.humanoidrootpart().Velocity = Vector3.new(0, 0, 0)
                         api.humanoidrootpart().CFrame = CFrame.new(v.CFrame.p, temptable.lookat)
@@ -3291,13 +3287,6 @@ game.Workspace.Particles.ChildAdded:Connect(function(v)
                         task.wait()
                         api.humanoidrootpart().CFrame = CFrame.new(v.CFrame.p)
                     end
-                elseif kocmoc.vars.autococoshowermode == "Tween" then
-                    api.tween(0.1, v.CFrame)
-                    --[[ api.humanoidrootpart().Velocity = Vector3.new(0, 0, 0) ]]
-                    --[[ api.humanoidrootpart().CFrame = CFrame.new(v.CFrame.p) ]]
-                    task.wait()
-                    --[[ api.humanoidrootpart().CFrame = CFrame.new(v.CFrame.p) ]]
-                    api.tween(0.1, v.CFrame)
                 end
             end
         elseif v.Name == "Crosshair" and kocmoc.toggles.collectcrosshairs then
