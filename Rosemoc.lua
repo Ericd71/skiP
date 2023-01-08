@@ -2268,7 +2268,6 @@ end)
 guiElements["toggles"]["farmfuzzy"] = farmo:CreateToggle("Farm Fuzzy Bombs", nil, function(State) kocmoc.toggles.farmfuzzy = State end)
 guiElements["toggles"]["farmunderballoons"] = farmo:CreateToggle("Farm Under Balloons", nil, function(State) kocmoc.toggles.farmunderballoons = State end)
 guiElements["toggles"]["farmclouds"] = farmo:CreateToggle("Farm Under Clouds", nil, function(State) kocmoc.toggles.farmclouds = State end)
-farmo:CreateLabel("")
 guiElements["toggles"]["honeymaskconv"] = farmo:CreateToggle("Auto Honey Mask", nil, function(bool) kocmoc.toggles.honeymaskconv = bool end)
 guiElements["vars"]["defmask"] = farmo:CreateDropdown("Default Mask", MasksTable, function(val) kocmoc.vars.defmask = val end)
 guiElements["vars"]["deftool"] = farmo:CreateDropdown("Default Tool", collectorstable, function(val) kocmoc.vars.deftool = val end)
@@ -3288,7 +3287,6 @@ game.Workspace.Particles.ChildAdded:Connect(function(v)
                         api.humanoidrootpart().CFrame = CFrame.new(v.CFrame.p)
                     end
                 end
-            end
         elseif v.Name == "Crosshair" and kocmoc.toggles.collectcrosshairs then
             local timestamp = Instance.new("NumberValue", v)
             timestamp.Name = "timestamp"
