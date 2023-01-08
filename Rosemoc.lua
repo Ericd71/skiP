@@ -1400,8 +1400,9 @@ function getdigital()
                 local hashed = math.random(1, 42345252)
                 v.Name = tostring(hashed)
                 repeat task.wait(0.1)
-                api.humanoidrootpart().Velocity = Vector3.new(0, 0, 0)
-                api.humanoidrootpart().CFrame = CFrame.new(v.CFrame.X, v.CFrame.Y - 14, v.CFrame.Z)
+                    api.tween(1, CFrame.new(v.CFrame.X, v.CFrame.Y - 14, v.CFrame.Z))
+                    --[[ api.humanoidrootpart().Velocity = Vector3.new(0, 0, 0)
+                    api.humanoidrootpart().CFrame = CFrame.new(v.CFrame.X, v.CFrame.Y - 14, v.CFrame.Z) ]]
                 until not game.Workspace.Camera.DupedTokens:FindFirstChild(hashed)
             end
         end
