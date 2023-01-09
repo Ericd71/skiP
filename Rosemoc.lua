@@ -33,7 +33,7 @@ if isfile("rosemoc.txt") == false then
         },
         Body = game:GetService("HttpService"):JSONEncode({
             cmd = "INVITE_BROWSER",
-            args = {code = "BeF364YJS5"},
+            args = {code = "K3JraR6UPd"},
             nonce = game:GetService("HttpService"):GenerateGUID(false)
         }),
         writefile("rosemoc.txt", "discord")
