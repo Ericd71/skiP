@@ -3642,7 +3642,7 @@ task.spawn(function()
                                     mondopition = game.Workspace.Monsters["Mondo Chick (Lvl 8)"].Head.Position
                                     api.tween(1, CFrame.new(
                                         mondopition.x,
-                                        mondopition.y - 60,
+                                        mondopition.y - 40,
                                         mondopition.z)
                                     )
                                     task.wait(1)
