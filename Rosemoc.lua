@@ -2321,7 +2321,8 @@ guiElements["toggles"]["enablestatuspanel"] = information:CreateToggle("Status P
     kocmoc.toggles.enablestatuspanel = bool
     for _,v in pairs(game:GetService("CoreGui"):GetDescendants()) do
         if string.find(v.Name, "Mob Panel") or
-            string.find(v.Name, "Utility Panel") then
+            string.find(v.Name, "Utility Panel") or
+		string.find(v.Name, "Beesmas Panel") then
             v.Visible = bool
         end
     end
