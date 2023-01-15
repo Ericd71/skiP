@@ -1,12 +1,12 @@
 -- BETA
 repeat task.wait(0.1) until game:IsLoaded()
 
-local OranginaBeta = function(VybfVlKAt3h03dqDsMaI, autoload, loadRecent, isbeta, ...)
+--local OranginaBeta = function(VybfVlKAt3h03dqDsMaI, autoload, loadRecent, isbeta, ...)
 getgenv().Star = "⭐"
 getgenv().Danger = "⚠️"
 getgenv().ExploitSpecific = "📜"
 getgenv().Beesmas = "🎄"
-getgenv().beta = isbeta or true
+getgenv().beta = isbeta or false
 
 --[[
 local Identify_ = math.random(54254252) -- Sakata
@@ -5508,6 +5508,5 @@ end
 if workspace:FindFirstChild("Gates") and workspace.Gates:FindFirstChild("15 Bee Gate") and workspace.Gates["15 Bee Gate"]:FindFirstChild("Frame") then
     game:GetService("Workspace").Gates["15 Bee Gate"].Frame:Destroy()
 end
-end
 
-return OranginaBeta
+
