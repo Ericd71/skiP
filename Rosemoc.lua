@@ -3040,7 +3040,6 @@ local BeeTable = require(game:GetService("ReplicatedStorage").BeeTypes).GetAllTy
 
 local autojellysection = misctab:CreateSection("Auto Jelly")
 
-autojellysection:CreateLabel("Auto Jelly Aka. RNG Manipulation")
 autojellysection:CreateLabel("")
 autojellysection:CreateTextBox("Horizonal (from left to right) ", 'examble 1', true, function(Value) kocmoc.autojelly.slot["horizonal"] = tonumber(Value) end)
 autojellysection:CreateTextBox("Vertical (from down to up)", 'example 3', true, function(Value) kocmoc.autojelly.slot["vertical"] = tonumber(Value) end)
