@@ -1511,7 +1511,7 @@ function farmcombattokens(v, pos, type)
     elseif type == 'mondo' then
         if temptable.MondoCollectTokens then return end
         if v.CFrame.YVector.Y == 1 and v.Transparency == 0 and v ~= nil and v.Parent ~= nil then
-            if (v.Position - pos.Position).Magnitude < 25 then
+            if (v.Position - pos.Position).Magnitude < 100 then
                 repeat
                     task.wait()
                     api.humanoidrootpart().CFrame = CFrame.new(v.Position)
@@ -2317,16 +2317,16 @@ end):AddToolTip("It will copy the Discord link to your clipboard!")
 information:CreateButton("Donation", function()
     setclipboard("https://www.paypal.com/paypalme/oranginabss")
 end)
+--[[
 guiElements["toggles"]["enablestatuspanel"] = information:CreateToggle("Status Panel", true, function(bool)
     kocmoc.toggles.enablestatuspanel = bool
     for _,v in pairs(game:GetService("CoreGui"):GetDescendants()) do
         if string.find(v.Name, "Mob Panel") or
-            string.find(v.Name, "Utility Panel") or
-		string.find(v.Name, "Beesmas Panel") then
+            string.find(v.Name, "Utility Panel") then
             v.Visible = bool
         end
     end
-end)
+end)]]
 
 local disableenable = hometab:CreateSection("Disable all or Enable all")
 disableenable:CreateButton("Disable All Functions", function()
@@ -3040,6 +3040,7 @@ local BeeTable = require(game:GetService("ReplicatedStorage").BeeTypes).GetAllTy
 
 local autojellysection = misctab:CreateSection("Auto Jelly")
 
+autojellysection:CreateLabel("Auto Jelly Aka. RNG Manipulation")
 autojellysection:CreateLabel("")
 autojellysection:CreateTextBox("Horizonal (from left to right) ", 'examble 1', true, function(Value) kocmoc.autojelly.slot["horizonal"] = tonumber(Value) end)
 autojellysection:CreateTextBox("Vertical (from down to up)", 'example 3', true, function(Value) kocmoc.autojelly.slot["vertical"] = tonumber(Value) end)
@@ -4942,14 +4943,16 @@ local function fetchVisualMonsterString(v)
 end
 
 local function getToyCooldown(toy)
+    pcall(function()
     local c = require(game.ReplicatedStorage.ClientStatCache):Get()
     local name = toy
     local t = workspace.OsTime.Value - c.ToyTimes[name]
     local cooldown = workspace.Toys[name].Cooldown.Value
     local u = cooldown - t
     local canBeUsed = false
-    if string.find(tostring(u), "-") then canBeUsed = true end
-    return u, canBeUsed
+    if string.find(tostring(u),"-") then canBeUsed = true end
+    return u,canBeUsed
+    end)
 end
 
 
@@ -5107,68 +5110,96 @@ end)]]
     
 
 task.spawn(function()
+    loadingInfo:CreateLabel("")
+    loadingInfo:CreateLabel("Script loaded!")
+    task.wait(2)
     pcall(function()
-        loadingInfo:CreateLabel("")
-        loadingInfo:CreateLabel("Script loaded!")
-        task.wait(2)
-        pcall(function()
-            for i, v in pairs(game.CoreGui:GetDescendants()) do
-                if v.Name == "Startup Section" then
-                    v.Parent.Parent.RightSide["Information Section"].Parent = v.Parent
-                    v:Destroy()
-                end
-            end
-        end)
-        local panel = hometab:CreateSection("Mob Panel")
-        local statusTable = {}
-        for i, v in pairs(monsterspawners:GetChildren()) do
-            if not string.find(v.Name, "CaveMonster") then
-                local mobText = nil
-                mobText = fetchVisualMonsterString(v)
-                if mobText ~= nil then
-                    local mob = panel:CreateButton(mobText, function()
-                        api.tween(1, CFrame.new(getNearestField(v)))
-                    end)
-                    table.insert(statusTable, {mob, v})
-                end
+        for i, v in pairs(game.CoreGui:GetDescendants()) do
+            if v.Name == "Startup Section" then
+                v.Parent.Parent.RightSide["Information Section"].Parent = v.Parent
+                v:Destroy()
             end
         end
+    end)
+    --[[
+    local panel = hometab:CreateSection("Mob Panel")
+    local statusTable = {}
+    for i, v in pairs(monsterspawners:GetChildren()) do
+        if not string.find(v.Name, "CaveMonster") then
+            local mobText = nil
+            mobText = fetchVisualMonsterString(v)
+            if mobText ~= nil then
+                local mob = panel:CreateButton(mobText, function()
+                    api.tween(1, CFrame.new(getNearestField(v)))
+                end)
+                table.insert(statusTable, {mob, v})
+            end
+        end
+    end
         local mob2 = panel:CreateButton("Mondo Chick: 00:00", function()
             api.tween(1,
                       game.Workspace.FlowerZones["Mountain Top Field"]
                           .CFrame)
         end)
-		
         local panel2 = hometab:CreateSection("Utility Panel")
         local ssUpd = panel2:CreateButton("Sprout Summoner: 00:00", function()
             api.tween(1, CFrame.new( game.Workspace.Toys["Sprout Summoner"].Platform.Position + Vector3.new(0, 5, 0)))
         end)
         local windUpd = panel2:CreateButton("Wind Shrine: 00:00", function()
-            api.tween(1, CFrame.new( game.Workspace.NPCs["Wind Shrine"].Circle.Position + Vector3.new(0, 5, 0)))
+            api.tween(1,
+                      CFrame.new(
+                          game.Workspace.NPCs["Wind Shrine"]
+                              .Circle.Position + Vector3.new(0, 5, 0)))
         end)
-        local rfbUpd = panel2:CreateButton("Red Field Booster: 00:00", function()
-            api.tween(1, CFrame.new( game.Workspace.Toys["Red Field Booster"].Platform.Position + Vector3.new(0, 5, 0)))
+        local rfbUpd = panel2:CreateButton("Red Field Booster: 00:00",
+                                           function()
+            api.tween(1,
+                      CFrame.new(
+                          game.Workspace.Toys["Red Field Booster"]
+                              .Platform.Position + Vector3.new(0, 5, 0)))
         end)
-        local bfbUpd = panel2:CreateButton("Blue Field Booster: 00:00",function()
-            api.tween(1, CFrame.new( game.Workspace.Toys["Blue Field Booster"].Platform.Position + Vector3.new(0, 5, 0)))
+        local bfbUpd = panel2:CreateButton("Blue Field Booster: 00:00",
+                                           function()
+            api.tween(1,
+                      CFrame.new(
+                          game.Workspace.Toys["Blue Field Booster"]
+                              .Platform.Position + Vector3.new(0, 5, 0)))
         end)
-        local wfbUpd = panel2:CreateButton("White Field Booster: 00:00",function()
-            api.tween(1, CFrame.new( game.Workspace.Toys["Field Booster"].Platform.Position + Vector3.new(0, 5, 0)))
+        local wfbUpd = panel2:CreateButton("White Field Booster: 00:00",
+                                           function()
+            api.tween(1, CFrame.new(
+                          game.Workspace.Toys["Field Booster"]
+                              .Platform.Position + Vector3.new(0, 5, 0)))
         end)
-        local cocoDispUpd = panel2:CreateButton("Coconut Dispenser: 00:00",function()
-            api.tween(1, CFrame.new( game.Workspace.Toys["Coconut Dispenser"].Platform.Position + Vector3.new(0, 5, 0)))
+        local cocoDispUpd = panel2:CreateButton("Coconut Dispenser: 00:00",
+                                                function()
+            api.tween(1,
+                      CFrame.new(
+                          game.Workspace.Toys["Coconut Dispenser"]
+                              .Platform.Position + Vector3.new(0, 5, 0)))
         end)
         local ic1 = panel2:CreateButton("Instant Converter A: 00:00", function()
-            api.tween(1, CFrame.new( game.Workspace.Toys["Instant Converter"].Platform.Position + Vector3.new(0, 5, 0)))
+            api.tween(1,
+                      CFrame.new(
+                          game.Workspace.Toys["Instant Converter"]
+                              .Platform.Position + Vector3.new(0, 5, 0)))
         end)
         local ic2 = panel2:CreateButton("Instant Converter B: 00:00", function()
-            api.tween(1, CFrame.new(game.Workspace.Toys["Instant Converter B"].Platform.Position + Vector3.new(0, 5, 0)))
+            api.tween(1,
+                      CFrame.new(
+                          game.Workspace.Toys["Instant Converter B"]
+                              .Platform.Position + Vector3.new(0, 5, 0)))
         end)
         local ic3 = panel2:CreateButton("Instant Converter C: 00:00", function()
-            api.tween(1, CFrame.new( game.Workspace.Toys["Instant Converter C"].Platform.Position + Vector3.new(0, 5, 0)))
+            api.tween(1,
+                      CFrame.new(
+                          game.Workspace.Toys["Instant Converter C"]
+                              .Platform.Position + Vector3.new(0, 5, 0)))
         end)
         local wcUpd = panel2:CreateButton("Wealth Clock: 00:00", function()
-            api.tween(1, CFrame.new( game.Workspace.Toys["Wealth Clock"].Platform.Position + Vector3.new(0, 5, 0)))
+            api.tween(1, CFrame.new(
+                          game.Workspace.Toys["Wealth Clock"]
+                              .Platform.Position + Vector3.new(0, 5, 0)))
         end)
         local mmsUpd = panel2:CreateButton("Mythic Meteor Shower: 00:00", function()
             api.tween(1, CFrame.new( game.Workspace.Toys["Mythic Meteor Shower"].Platform.Position + Vector3.new(0, 5, 0)))
@@ -5190,13 +5221,12 @@ task.spawn(function()
         local hcUpd = panel3:CreateButton("Honeyday Candles: 00:00", function()
             api.tween(1, CFrame.new( game.Workspace.Toys["Honeyday Candles"].Platform.Position + Vector3.new(0, 5, 0)))
         end)
-        local bfsUpd = panel3:CreateButton("Beesmas Feast: 00:00", function()
+        local bfUpd = panel3:CreateButton("Beesmas Feast: 00:00", function()
             api.tween(1, CFrame.new( game.Workspace.Toys["Beesmas Feast"].Platform.Position + Vector3.new(0, 5, 0)))
         end)
         local olaUpd = panel3:CreateButton("Onett's Lid Art: 00:00", function()
             api.tween(1, CFrame.new( game.Workspace.Toys["Onett's Lid Art"].Platform.Position + Vector3.new(0, 5, 0)))
         end)
-        
         local utilities = {
             ["Sprout Summoner"] = ssUpd,
             ["Red Field Booster"] = rfbUpd,
@@ -5213,10 +5243,9 @@ task.spawn(function()
             ["Gingerbread House"] = gbUpd,
             ["Samovar"] = smvrUpd,
             ["Honeyday Candles"] = hcUpd,
-            ["Beesmas Feast"] = bfsUpd,
-            ["Onett's Lid Art"] = olaUpd,
+            ["Beesmas Feast"] = bfUpd,
+            ["Onett's Lid Art"] = olaUpd
         }
-
         while task.wait(1) do
             if kocmoc.toggles.enablestatuspanel then
                 for i, v in pairs(statusTable) do
@@ -5258,8 +5287,7 @@ task.spawn(function()
                     end
                 end
             end
-        end
-    end)
+        end]]
 end)
 
 if loadRecent and isfile('kocmoc/recent.json') then
