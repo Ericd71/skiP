@@ -8,6 +8,9 @@ getgenv().ExploitSpecific = "📜"
 getgenv().Beesmas = "🎄"
 getgenv().beta = isbeta or false
 
+autoload = getgenv().autoload
+loadRecent = getgenv().loadRecent
+
 --[[
 local Identify_ = math.random(54254252) -- Sakata
 
