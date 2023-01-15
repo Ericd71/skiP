@@ -17,6 +17,12 @@ local Identify_ = math.random(54254252) -- Sakata
 getgenv().Identify = Identify_
 ]]
 
+local VirtualUser=game:service'VirtualUser'
+game:service'Players'.LocalPlayer.Idled:connect(function()
+VirtualUser:CaptureController()
+VirtualUser:ClickButton2(Vector2.new())
+end)
+
 -- API CALLS
 
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ericd71/skiP/main/Library.lua"))()
@@ -2388,7 +2394,7 @@ guiElements["toggles"]["farmclouds"] = farmo:CreateToggle("Farm Under Clouds", n
 guiElements["toggles"]["honeymaskconv"] = farmo:CreateToggle("Auto Honey Mask", nil, function(bool) kocmoc.toggles.honeymaskconv = bool end)
 guiElements["vars"]["defmask"] = farmo:CreateDropdown("Default Mask", MasksTable, function(val) kocmoc.vars.defmask = val end)
 guiElements["vars"]["deftool"] = farmo:CreateDropdown("Default Tool", collectorstable, function(val) kocmoc.vars.deftool = val end)
-guiElements["toggles"]["autoequipmask"] = farmo:CreateToggle("Equip Mask Based on Field", nil, function(bool) kocmoc.toggles.autoequipmask = bool end)
+--[[ guiElements["toggles"]["autoequipmask"] = farmo:CreateToggle("Equip Mask Based on Field", nil, function(bool) kocmoc.toggles.autoequipmask = bool end) ]]
 guiElements["toggles"]["followplayer"] = farmo:CreateToggle("Follow Player", nil, function(bool)
     kocmoc.toggles.followplayer = bool
 end)
@@ -2450,7 +2456,7 @@ guiElements["toggles"]["tackyplanter"] = plantersection:CreateToggle("Blacklist 
 guiElements["toggles"]["pesticideplanter"] = plantersection:CreateToggle("Blacklist Pesticide Planter", nil, function(State) kocmoc.toggles.pesticideplanter = State end)
 guiElements["toggles"]["petalplanter"] = plantersection:CreateToggle("Blacklist Petal Planter", nil, function(State) kocmoc.toggles.petalplanter = State end)
 
-local customplanterssection = plantertab:CreateSection("Custom Planters")
+--[[ local customplanterssection = plantertab:CreateSection("Custom Planters")
 customplanterssection:CreateLabel("Turning this on will disable auto planters!")
 customplanterssection:CreateLabel("["..Danger.."] You should know what you are")
 customplanterssection:CreateLabel("doing before turning this on! ["..Danger.."]")
@@ -2595,7 +2601,7 @@ guiElements["vars"]["customplanter35"] = customplanter3section:CreateDropdown("F
 end)
 guiElements["vars"]["customplanterdelay35"] = customplanter3section:CreateSlider("Field 5 Harvest %", 0, 100, 75, false, function(Value)
     kocmoc.vars.customplanterdelay35 = Value
-end)
+end) ]]
 
 local mobkill = combtab:CreateSection("Combat")
 guiElements["toggles"]["traincommando"] = mobkill:CreateToggle("Train Commando Chick", nil, function(State) kocmoc.toggles.traincommando = State end)
@@ -3457,8 +3463,8 @@ end)
 guiElements["toggles"]["tptonpc"] = aqs:CreateToggle("Teleport To NPC", nil, function(State) kocmoc.toggles.tptonpc = State end)
 guiElements["toggles"]["autoquesthoneybee"] = aqs:CreateToggle("Include Honey Bee Quests", nil, function(State) kocmoc.toggles.autoquesthoneybee = State end)
 guiElements["toggles"]["buyantpass"] = aqs:CreateToggle("Buy Ant Pass When Needed", nil, function(State) kocmoc.toggles.buyantpass = State end)
-guiElements["toggles"]["smartmobkill"] = aqs:CreateToggle("Modify Mob Kill To Match Quests", nil, function(State) kocmoc.toggles.smartmobkill = State end)
-guiElements["toggles"]["usegumdropsforquest"] = aqs:CreateToggle("Use Gumdrops For Goo Quests", nil, function(State) kocmoc.toggles.usegumdropsforquest = State end)
+--[[ guiElements["toggles"]["smartmobkill"] = aqs:CreateToggle("Modify Mob Kill To Match Quests", nil, function(State) kocmoc.toggles.smartmobkill = State end) ]]
+--[[ guiElements["toggles"]["usegumdropsforquest"] = aqs:CreateToggle("Use Gumdrops For Goo Quests", nil, function(State) kocmoc.toggles.usegumdropsforquest = State end) ]]
 
 
 local pts = setttab:CreateSection("Autofarm Priority Tokens")
