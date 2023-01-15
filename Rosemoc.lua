@@ -5138,68 +5138,63 @@ task.spawn(function()
                       game.Workspace.FlowerZones["Mountain Top Field"]
                           .CFrame)
         end)
+		
         local panel2 = hometab:CreateSection("Utility Panel")
         local ssUpd = panel2:CreateButton("Sprout Summoner: 00:00", function()
             api.tween(1, CFrame.new( game.Workspace.Toys["Sprout Summoner"].Platform.Position + Vector3.new(0, 5, 0)))
         end)
         local windUpd = panel2:CreateButton("Wind Shrine: 00:00", function()
-            api.tween(1,
-                      CFrame.new(
-                          game.Workspace.NPCs["Wind Shrine"]
-                              .Circle.Position + Vector3.new(0, 5, 0)))
+            api.tween(1, CFrame.new( game.Workspace.NPCs["Wind Shrine"].Circle.Position + Vector3.new(0, 5, 0)))
         end)
-        local rfbUpd = panel2:CreateButton("Red Field Booster: 00:00",
-                                           function()
-            api.tween(1,
-                      CFrame.new(
-                          game.Workspace.Toys["Red Field Booster"]
-                              .Platform.Position + Vector3.new(0, 5, 0)))
+        local rfbUpd = panel2:CreateButton("Red Field Booster: 00:00", function()
+            api.tween(1, CFrame.new( game.Workspace.Toys["Red Field Booster"].Platform.Position + Vector3.new(0, 5, 0)))
         end)
-        local bfbUpd = panel2:CreateButton("Blue Field Booster: 00:00",
-                                           function()
-            api.tween(1,
-                      CFrame.new(
-                          game.Workspace.Toys["Blue Field Booster"]
-                              .Platform.Position + Vector3.new(0, 5, 0)))
+        local bfbUpd = panel2:CreateButton("Blue Field Booster: 00:00",function()
+            api.tween(1, CFrame.new( game.Workspace.Toys["Blue Field Booster"].Platform.Position + Vector3.new(0, 5, 0)))
         end)
-        local wfbUpd = panel2:CreateButton("White Field Booster: 00:00",
-                                           function()
-            api.tween(1, CFrame.new(
-                          game.Workspace.Toys["Field Booster"]
-                              .Platform.Position + Vector3.new(0, 5, 0)))
+        local wfbUpd = panel2:CreateButton("White Field Booster: 00:00",function()
+            api.tween(1, CFrame.new( game.Workspace.Toys["Field Booster"].Platform.Position + Vector3.new(0, 5, 0)))
         end)
-        local cocoDispUpd = panel2:CreateButton("Coconut Dispenser: 00:00",
-                                                function()
-            api.tween(1,
-                      CFrame.new(
-                          game.Workspace.Toys["Coconut Dispenser"]
-                              .Platform.Position + Vector3.new(0, 5, 0)))
+        local cocoDispUpd = panel2:CreateButton("Coconut Dispenser: 00:00",function()
+            api.tween(1, CFrame.new( game.Workspace.Toys["Coconut Dispenser"].Platform.Position + Vector3.new(0, 5, 0)))
         end)
         local ic1 = panel2:CreateButton("Instant Converter A: 00:00", function()
-            api.tween(1,
-                      CFrame.new(
-                          game.Workspace.Toys["Instant Converter"]
-                              .Platform.Position + Vector3.new(0, 5, 0)))
+            api.tween(1, CFrame.new( game.Workspace.Toys["Instant Converter"].Platform.Position + Vector3.new(0, 5, 0)))
         end)
         local ic2 = panel2:CreateButton("Instant Converter B: 00:00", function()
-            api.tween(1,
-                      CFrame.new(
-                          game.Workspace.Toys["Instant Converter B"]
-                              .Platform.Position + Vector3.new(0, 5, 0)))
+            api.tween(1, CFrame.new(game.Workspace.Toys["Instant Converter B"].Platform.Position + Vector3.new(0, 5, 0)))
         end)
         local ic3 = panel2:CreateButton("Instant Converter C: 00:00", function()
-            api.tween(1,
-                      CFrame.new(
-                          game.Workspace.Toys["Instant Converter C"]
-                              .Platform.Position + Vector3.new(0, 5, 0)))
+            api.tween(1, CFrame.new( game.Workspace.Toys["Instant Converter C"].Platform.Position + Vector3.new(0, 5, 0)))
         end)
         local wcUpd = panel2:CreateButton("Wealth Clock: 00:00", function()
-            api.tween(1, CFrame.new(
-                          game.Workspace.Toys["Wealth Clock"]
-                              .Platform.Position + Vector3.new(0, 5, 0)))
+            api.tween(1, CFrame.new( game.Workspace.Toys["Wealth Clock"].Platform.Position + Vector3.new(0, 5, 0)))
         end)
         local mmsUpd = panel2:CreateButton("Mythic Meteor Shower: 00:00", function()
             api.tween(1, CFrame.new( game.Workspace.Toys["Mythic Meteor Shower"].Platform.Position + Vector3.new(0, 5, 0)))
+        end)
+
+        local panel3 = hometab:CreateSection("Beesmas Panel ["..Beesmas.."]")
+        local hwUpd = panel3:CreateButton("Honey Wreath: 00:00", function()
+            api.tween(1, CFrame.new( game.Workspace.Toys["Honey Wreath"].Platform.Position + Vector3.new(0, 5, 0)))
+        end)
+        local smUpd = panel3:CreateButton("Snow Machine: 00:00", function()
+            api.tween(1, CFrame.new( game.Workspace.Toys["Snow Machine"].Platform.Position + Vector3.new(0, 5, 0)))
+        end)
+        local gbUpd = panel3:CreateButton("Gingerbread House: 00:00", function()
+            api.tween(1, CFrame.new( game.Workspace.Toys["Gingerbread House"].Platform.Position + Vector3.new(0, 5, 0)))
+        end)
+        local smvrUpd = panel3:CreateButton("Samovar: 00:00", function()
+            api.tween(1, CFrame.new( game.Workspace.Toys["Samovar"].Platform.Position + Vector3.new(0, 5, 0)))
+        end)
+        local hcUpd = panel3:CreateButton("Honeyday Candles: 00:00", function()
+            api.tween(1, CFrame.new( game.Workspace.Toys["Honeyday Candles"].Platform.Position + Vector3.new(0, 5, 0)))
+        end)
+        local bfsUpd = panel3:CreateButton("Beesmas Feast: 00:00", function()
+            api.tween(1, CFrame.new( game.Workspace.Toys["Beesmas Feast"].Platform.Position + Vector3.new(0, 5, 0)))
+        end)
+        local olaUpd = panel3:CreateButton("Onett's Lid Art: 00:00", function()
+            api.tween(1, CFrame.new( game.Workspace.Toys["Onett's Lid Art"].Platform.Position + Vector3.new(0, 5, 0)))
         end)
         
         local utilities = {
@@ -5218,32 +5213,10 @@ task.spawn(function()
             ["Gingerbread House"] = gbUpd,
             ["Samovar"] = smvrUpd,
             ["Honeyday Candles"] = hcUpd,
-            ["Beesmas Feast"] = bfUpd,
-            ["Onett's Lid Art"] = olaUpd
+            ["Beesmas Feast"] = bfsUpd,
+            ["Onett's Lid Art"] = olaUpd,
         }
 
-        local panel3 = hometab:CreateSection("Beesmas Panel ["..Beesmas.."]")
-        local hwUpd = panel2:CreateButton("Honey Wreath: 00:00", function()
-            api.tween(1, CFrame.new( game.Workspace.Toys["Honey Wreath"].Platform.Position + Vector3.new(0, 5, 0)))
-        end)
-        local smUpd = panel3:CreateButton("Snow Machine: 00:00", function()
-            api.tween(1, CFrame.new( game.Workspace.Toys["Snow Machine"].Platform.Position + Vector3.new(0, 5, 0)))
-        end)
-        local gbUpd = panel3:CreateButton("Gingerbread House: 00:00", function()
-            api.tween(1, CFrame.new( game.Workspace.Toys["Gingerbread House"].Platform.Position + Vector3.new(0, 5, 0)))
-        end)
-        local smvrUpd = panel3:CreateButton("Samovar: 00:00", function()
-            api.tween(1, CFrame.new( game.Workspace.Toys["Samovar"].Platform.Position + Vector3.new(0, 5, 0)))
-        end)
-        local hcUpd = panel3:CreateButton("Honeyday Candles: 00:00", function()
-            api.tween(1, CFrame.new( game.Workspace.Toys["Honeyday Candles"].Platform.Position + Vector3.new(0, 5, 0)))
-        end)
-        local bfUpd = panel3:CreateButton("Beesmas Feast: 00:00", function()
-            api.tween(1, CFrame.new( game.Workspace.Toys["Beesmas Feast"].Platform.Position + Vector3.new(0, 5, 0)))
-        end)
-        local olaUpd = panel3:CreateButton("Onett's Lid Art: 00:00", function()
-            api.tween(1, CFrame.new( game.Workspace.Toys["Onett's Lid Art"].Platform.Position + Vector3.new(0, 5, 0)))
-        end)
         while task.wait(1) do
             if kocmoc.toggles.enablestatuspanel then
                 for i, v in pairs(statusTable) do
