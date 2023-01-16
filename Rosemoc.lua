@@ -5509,12 +5509,12 @@ for _, part in next, workspace:FindFirstChild("Decorations"):GetDescendants() do
         task.wait()
     end
 end
---for i, v in next, workspace.Decorations.Misc:GetDescendants() do
-   -- if v.Parent.Name == "Mushroom" then
-     --   v.CanCollide = false
-      --  v.Transparency = 0.5
-  --  end
---end
+for i, v in next, workspace.Decorations.Misc:GetDescendants() do
+    if v.Parent.Name == "Mushroom" then
+        v.CanCollide = false
+       v.Transparency = 0.5
+    end
+end
 if workspace:FindFirstChild('Decorations') and workspace.Decorations:FindFirstChild('30BeeZone') and workspace.Decorations['30BeeZone']:FindFirstChild('Pit')  then
     game:GetService("Workspace").Decorations['30BeeZone'].Pit:Destroy()
 end
