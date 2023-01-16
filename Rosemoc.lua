@@ -3613,7 +3613,7 @@ end)
 
 local UseMicro = function(...)
     pcall(function()
-        game:GetService("ReplicatedStorage").Events.PlayerActivesCommand:FireServer(["Name"] = "Micro-Converter")
+        game:GetService("ReplicatedStorage").Events.PlayerActivesCommand:FireServer({["Name"] = "Micro-Converter"})
     end)
 end
 -- Auto Digital Bee
