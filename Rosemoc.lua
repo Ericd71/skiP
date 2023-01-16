@@ -3649,7 +3649,6 @@ task.spawn(function()
                         end)
                     end
                 end
-            end
             if kocmoc.toggles.autouseconvertors then
                 if tonumber(temptable.pollenpercentage) >= (kocmoc.vars.convertat - (kocmoc.vars.autoconvertWaitTime)) then
                     if not temptable.consideringautoconverting then
