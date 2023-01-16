@@ -2388,7 +2388,7 @@ guiElements["toggles"]["farmclouds"] = farmo:CreateToggle("Farm Under Clouds", n
 guiElements["toggles"]["honeymaskconv"] = farmo:CreateToggle("Auto Honey Mask", nil, function(bool) kocmoc.toggles.honeymaskconv = bool end)
 guiElements["vars"]["defmask"] = farmo:CreateDropdown("Default Mask", MasksTable, function(val) kocmoc.vars.defmask = val end)
 guiElements["vars"]["deftool"] = farmo:CreateDropdown("Default Tool", collectorstable, function(val) kocmoc.vars.deftool = val end)
---[[ guiElements["toggles"]["autoequipmask"] = farmo:CreateToggle("Equip Mask Based on Field", nil, function(bool) kocmoc.toggles.autoequipmask = bool end) ]]
+guiElements["toggles"]["autoequipmask"] = farmo:CreateToggle("Equip Mask Based on Field", nil, function(bool) kocmoc.toggles.autoequipmask = bool end)
 guiElements["toggles"]["followplayer"] = farmo:CreateToggle("Follow Player", nil, function(bool)
     kocmoc.toggles.followplayer = bool
 end)
@@ -3457,8 +3457,8 @@ end)
 guiElements["toggles"]["tptonpc"] = aqs:CreateToggle("Teleport To NPC", nil, function(State) kocmoc.toggles.tptonpc = State end)
 guiElements["toggles"]["autoquesthoneybee"] = aqs:CreateToggle("Include Honey Bee Quests", nil, function(State) kocmoc.toggles.autoquesthoneybee = State end)
 guiElements["toggles"]["buyantpass"] = aqs:CreateToggle("Buy Ant Pass When Needed", nil, function(State) kocmoc.toggles.buyantpass = State end)
---[[ guiElements["toggles"]["smartmobkill"] = aqs:CreateToggle("Modify Mob Kill To Match Quests", nil, function(State) kocmoc.toggles.smartmobkill = State end) ]]
---[[ guiElements["toggles"]["usegumdropsforquest"] = aqs:CreateToggle("Use Gumdrops For Goo Quests", nil, function(State) kocmoc.toggles.usegumdropsforquest = State end) ]]
+guiElements["toggles"]["smartmobkill"] = aqs:CreateToggle("Modify Mob Kill To Match Quests", nil, function(State) kocmoc.toggles.smartmobkill = State end)
+guiElements["toggles"]["usegumdropsforquest"] = aqs:CreateToggle("Use Gumdrops For Goo Quests", nil, function(State) kocmoc.toggles.usegumdropsforquest = State end)
 
 
 local pts = setttab:CreateSection("Autofarm Priority Tokens")
@@ -5512,7 +5512,7 @@ end
 for i, v in next, workspace.Decorations.Misc:GetDescendants() do
     if v.Parent.Name == "Mushroom" then
         v.CanCollide = false
-       v.Transparency = 0.5
+        v.Transparency = 0.5
     end
 end
 if workspace:FindFirstChild('Decorations') and workspace.Decorations:FindFirstChild('30BeeZone') and workspace.Decorations['30BeeZone']:FindFirstChild('Pit')  then
