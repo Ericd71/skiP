@@ -462,6 +462,7 @@ getgenv().kocmoc = {
         autodonate = false,
         farmdigital = false,
         autouseconvertors = false,
+        autousemicro = false,
         honeymaskconv = false,
         resetbeenergy = false,
         enablestatuspanel = false,
@@ -2362,6 +2363,9 @@ end)
 guiElements["toggles"]["autouseconvertors"] = contt:CreateToggle("Auto Bag Reduction", nil, function(Boole)
     kocmoc.toggles.autouseconvertors = Boole
 end)
+guiElements["toggles"]["automicro"] = contt:CreateToggle("Auto Use Micro", nil, function(State)
+    kocmoc.toggles.autousemicro = State
+end)
 guiElements["vars"]["autouseMode"] = contt:CreateDropdown("Bag Reduction Mode", {
     "Ticket Converters", "Just Snowflakes", "Just Coconuts",
     "Snowflakes and Coconuts", "Tickets and Snowflakes", "Tickets and Coconuts", "Honey Wreath", "Stinger", "All"
@@ -3607,6 +3611,11 @@ game.Workspace.Particles.ChildAdded:Connect(function(v)
     end
 end)
 
+local UseMicro = function(...)
+    pcall(function()
+        game:GetService("ReplicatedStorage").Events.PlayerActivesCommand:FireServer(["Name"] = "Micro-Converter")
+    end)
+end
 -- Auto Digital Bee
 
 --[[ game.Workspace.Camera.DupedTokens.ChildAdded:Connect(function(v)
@@ -3627,7 +3636,20 @@ task.spawn(function()
             local pollencount = player.CoreStats.Pollen.Value
             temptable.pollenpercentage = pollencount / maxpollen * 100
             fieldselected = game.Workspace.FlowerZones[kocmoc.vars.field]
-
+            if kocmoc.toggles.autousemicro then
+                if tonumber(temptable.pollenpercentage) >= (kocmoc.vars.convertat - (kocmoc.vars.autoconvertWaitTime)) then
+                    if not temptable.consideringautoconverting then
+                        temptable.consideringautoconverting = true
+                        task.spawn(function()
+                            task.wait(kocmoc.vars.autoconvertWaitTime)
+                            if tonumber(temptable.pollenpercentage) >= (kocmoc.vars.convertat - (kocmoc.vars.autoconvertWaitTime)) then
+                                UseMicro()
+                            end
+                            temptable.consideringautoconverting = false
+                        end)
+                    end
+                end
+            end
             if kocmoc.toggles.autouseconvertors then
                 if tonumber(temptable.pollenpercentage) >= (kocmoc.vars.convertat - (kocmoc.vars.autoconvertWaitTime)) then
                     if not temptable.consideringautoconverting then
