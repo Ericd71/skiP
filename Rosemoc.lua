@@ -3462,7 +3462,7 @@ guiElements["toggles"]["usegumdropsforquest"] = aqs:CreateToggle("Use Gumdrops F
 
 
 local pts = setttab:CreateSection("Autofarm Priority Tokens")
-local ragemodepts = pts:CreateToggle("Rage Mode", nil, function(State)
+local ragemodepts = pts:CreateToggle("Rage Mode ["..Danger.."]", nil, function(State)
     kocmoc.toggles.ptsrage = State
 end)
 pts:CreateTextBox("Asset ID", "rbxassetid", false, function(Value) rarename = Value end)
