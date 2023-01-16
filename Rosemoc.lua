@@ -17,12 +17,6 @@ local Identify_ = math.random(54254252) -- Sakata
 getgenv().Identify = Identify_
 ]]
 
-local VirtualUser=game:service'VirtualUser'
-game:service'Players'.LocalPlayer.Idled:connect(function()
-VirtualUser:CaptureController()
-VirtualUser:ClickButton2(Vector2.new())
-end)
-
 -- API CALLS
 
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Ericd71/skiP/main/Library.lua"))()
@@ -4591,10 +4585,18 @@ game:GetService("RunService").Heartbeat:connect(function()
         floatpad.CanCollide = false
     end
 end)
-
+if syn then
 for i,v in pairs(getconnections(game.Players.LocalPlayer.Idled)) do
     v:Disable()
 end
+else
+    local vu = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+   vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+   wait(1)
+   vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
+
 
 local canTeleport = true
 game:GetService("Workspace").Particles.Snowflakes.ChildAdded:Connect(function(snowflake)
